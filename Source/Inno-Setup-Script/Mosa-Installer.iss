@@ -86,7 +86,6 @@ Source: "..\..\bin\mscorlib.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\*.*"; DestDir: "{app}\bin"; Flags: ignoreversion
 
 
-
 ;Tools
 Source: "..\..\Tools\nasm\*.*"; DestDir: "{app}\Tools\nasm"; Flags: ignoreversion
 Source: "..\..\Tools\ndisasm\*.*"; DestDir: "{app}\Tools\ndisasm"; Flags: ignoreversion

@@ -34,6 +34,9 @@
     	<Reference Include="Mosa.Plug.Korlib.x86">
       		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Plug.Korlib.x86.dll</HintPath>
     	</Reference>
+		<Reference Include="Mosa.Runtime.x86">
+			<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Runtime.x86.dll</HintPath>
+		</Reference>
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<StartAction>Program</StartAction>

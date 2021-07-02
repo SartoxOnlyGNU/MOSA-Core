@@ -109,7 +109,7 @@ namespace Launcher
 
 		DateTime startTime;
 
-		void NotifyEvent(CompilerEvent e,string message,int threadID)
+		void NotifyEvent(CompilerEvent e, string message, int threadID)
 		{
 			switch (e)
 			{
@@ -121,7 +121,7 @@ namespace Launcher
 					TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
 					this.Invoke(new Action(() =>
 					{
-						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')}";
+						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')} Output/MOSA.iso";
 					}));
 					break;
 			}
@@ -140,6 +140,17 @@ namespace Launcher
 
 		private void button2_Click(object sender, EventArgs e)
 		{
+			if (Directory.Exists("Output"))
+			{
+				Directory.Delete("Output", true);
+			}
+
+			if (FileName == null)
+			{
+				MessageBox.Show("Select a file first", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+
 			try
 			{
 				if (Settings.GetValue("Launcher.HuntForCorLib", false))
@@ -197,7 +208,7 @@ namespace Launcher
 		private void MakeISO()
 		{
 			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/syslinux");
-			foreach(var v in directoryInfo.GetFiles())
+			foreach (var v in directoryInfo.GetFiles())
 			{
 				if (!Directory.Exists(Environment.CurrentDirectory + @"\Output\ISO"))
 				{
@@ -206,7 +217,7 @@ namespace Launcher
 				v.CopyTo(Environment.CurrentDirectory + @"\Output\ISO\" + v.Name, true);
 			}
 
-			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\Output\system.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\Output\ISO"}\"";
+			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\Output\MOSA.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\Output\ISO"}\"";
 			Process.Start("../Tools/mkisofs/mkisofs.exe", args);
 		}
 

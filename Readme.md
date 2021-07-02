@@ -2,6 +2,8 @@
 #### One of my MOSA demos(Not included)
 ![GIF 2021-7-2 0-58-51](https://user-images.githubusercontent.com/54205437/124325090-a7c26d80-dbb6-11eb-8146-04f100888244.gif)
 
+# In MOSA. Before use a class. Call setup first if there is.
+
 [![Build status][build-status-image]][build-status]  [![Test status][test-status-image]][test-status]  [![License][github-license]][github-license-link]  [![Issues][github-issues]][github-issues-link]  [![Stars][github-stars]][github-stars-link]  [![Forks][github-forks]][github-forks-link]  
 
 [![Gitter Chat][gitter-image]][gitter-chat]

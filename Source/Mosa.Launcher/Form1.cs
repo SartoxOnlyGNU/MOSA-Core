@@ -65,7 +65,7 @@ namespace Launcher
 			Settings.SetValue("Optimizations.TwoPass", true);
 			Settings.SetValue("Optimizations.ValueNumbering", true);
 			Settings.SetValue("Image.BootLoader", "Syslinux3.72");
-			Settings.SetValue("Image.Folder", Path.Combine(Environment.CurrentDirectory, "MOSA"));
+			Settings.SetValue("Image.Folder", Path.Combine(System.Windows.Forms.Application.ExecutablePath, "MOSA"));
 			Settings.SetValue("Image.Format", "ISO");
 			Settings.SetValue("Image.FileSystem", "FAT16");
 			Settings.SetValue("Image.ImageFile", "%DEFAULT%");
@@ -88,7 +88,7 @@ namespace Launcher
 			Settings.SetValue("Launcher.HuntForCorLib", true);
 			Settings.SetValue("Linker.Drawf", false);
 			Settings.SetValue("OS.Name", "MOSA");
-			Settings.SetValue("Compiler.OutputFile", Environment.CurrentDirectory + @"\output\ISO\main.exe");
+			Settings.SetValue("Compiler.OutputFile", System.Windows.Forms.Application.ExecutablePath + @"\output\ISO\main.exe");
 
 			//RegisterPlatfroms
 			RegisterPlatfroms();
@@ -104,7 +104,7 @@ namespace Launcher
 			}
 			else
 			{
-				SetFile(Environment.CurrentDirectory + $@"\{args[0]}");
+				SetFile(System.Windows.Forms.Application.ExecutablePath + $@"\{args[0]}");
 			}
 			
 
@@ -219,14 +219,14 @@ namespace Launcher
 			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/syslinux");
 			foreach (var v in directoryInfo.GetFiles())
 			{
-				if (!Directory.Exists(Environment.CurrentDirectory + @"\output\ISO"))
+				if (!Directory.Exists(System.Windows.Forms.Application.ExecutablePath + @"\output\ISO"))
 				{
-					Directory.CreateDirectory(Environment.CurrentDirectory + @"\output\ISO");
+					Directory.CreateDirectory(System.Windows.Forms.Application.ExecutablePath + @"\output\ISO");
 				}
-				v.CopyTo(Environment.CurrentDirectory + @"\output\ISO\" + v.Name, true);
+				v.CopyTo(System.Windows.Forms.Application.ExecutablePath + @"\output\ISO\" + v.Name, true);
 			}
 
-			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\output\MOSA.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\output\ISO"}\"";
+			var args = $"-relaxed-filenames -J -R -o \"{System.Windows.Forms.Application.ExecutablePath + @"\output\MOSA.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{System.Windows.Forms.Application.ExecutablePath + @"\output\ISO"}\"";
 			Process.Start("../Tools/mkisofs/mkisofs.exe", args);
 		}
 
@@ -235,10 +235,10 @@ namespace Launcher
 			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/vmware");
 			foreach (var v in directoryInfo.GetFiles())
 			{
-				v.CopyTo(Environment.CurrentDirectory + @"\output\" + v.Name, true);
+				v.CopyTo(System.Windows.Forms.Application.ExecutablePath + @"\output\" + v.Name, true);
 			}
 
-			Process.Start(@"C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe", $"start {Environment.CurrentDirectory + @"\output.MOSA.vmx"}");
+			Process.Start(@"C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe", $"start {System.Windows.Forms.Application.ExecutablePath + @"\output.MOSA.vmx"}");
 		}
 
 		private void button1_Click(object sender, EventArgs e)

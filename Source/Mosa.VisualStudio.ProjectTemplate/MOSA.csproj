@@ -14,19 +14,19 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="Mosa.Korlib">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\mscorlib.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\mscorlib.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Kernel.x86">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Kernel.x86.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Kernel.x86.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Platform.x86">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Platform.x86.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Platform.x86.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Runtime">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Runtime.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Runtime.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.External">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.External.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.External.dll</HintPath>
     	</Reference>
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">

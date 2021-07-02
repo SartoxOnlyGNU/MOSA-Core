@@ -88,7 +88,7 @@ namespace Launcher
 			Settings.SetValue("Launcher.HuntForCorLib", true);
 			Settings.SetValue("Linker.Drawf", false);
 			Settings.SetValue("OS.Name", "MOSA");
-			Settings.SetValue("Compiler.OutputFile", Environment.CurrentDirectory + @"\Output\ISO\main.exe");
+			Settings.SetValue("Compiler.OutputFile", Environment.CurrentDirectory + @"\output\ISO\main.exe");
 
 			//RegisterPlatfroms
 			RegisterPlatfroms();
@@ -121,8 +121,9 @@ namespace Launcher
 					TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
 					this.Invoke(new Action(() =>
 					{
-						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')} Output/MOSA.iso";
+						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')} output/MOSA.iso";
 					}));
+					Launch();
 					break;
 			}
 		}
@@ -140,9 +141,9 @@ namespace Launcher
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			if (Directory.Exists("Output"))
+			if (Directory.Exists("output"))
 			{
-				Directory.Delete("Output", true);
+				Directory.Delete("output", true);
 			}
 
 			if (FileName == null)
@@ -210,15 +211,26 @@ namespace Launcher
 			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/syslinux");
 			foreach (var v in directoryInfo.GetFiles())
 			{
-				if (!Directory.Exists(Environment.CurrentDirectory + @"\Output\ISO"))
+				if (!Directory.Exists(Environment.CurrentDirectory + @"\output\ISO"))
 				{
-					Directory.CreateDirectory(Environment.CurrentDirectory + @"\Output\ISO");
+					Directory.CreateDirectory(Environment.CurrentDirectory + @"\output\ISO");
 				}
-				v.CopyTo(Environment.CurrentDirectory + @"\Output\ISO\" + v.Name, true);
+				v.CopyTo(Environment.CurrentDirectory + @"\output\ISO\" + v.Name, true);
 			}
 
-			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\Output\MOSA.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\Output\ISO"}\"";
+			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\output\MOSA.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\output\ISO"}\"";
 			Process.Start("../Tools/mkisofs/mkisofs.exe", args);
+		}
+
+		private void Launch()
+		{
+			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/vmware");
+			foreach (var v in directoryInfo.GetFiles())
+			{
+				v.CopyTo(Environment.CurrentDirectory + @"\output\" + v.Name, true);
+			}
+
+			Process.Start(@"C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe", $"start {Environment.CurrentDirectory + @"\output.MOSA.vmx"}");
 		}
 
 		private void button1_Click(object sender, EventArgs e)

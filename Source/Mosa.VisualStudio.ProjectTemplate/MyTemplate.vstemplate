@@ -1,13 +1,13 @@
 <VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
   <TemplateData>
-    <Name>MOSA C# Starter Project</Name>
-    <Description>A project for creating a MOSA application</Description>
+    <Name>MOSA</Name>
+    <Description>Use MOSA(nifanfa) to create an operating system</Description>
     <ProjectType>CSharp</ProjectType>
     <ProjectSubType>
     </ProjectSubType>
     <SortOrder>1000</SortOrder>
     <CreateNewFolder>true</CreateNewFolder>
-    <DefaultName>Mosa.Starter.x86</DefaultName>
+    <DefaultName>MOSA</DefaultName>
     <ProvideDefaultName>true</ProvideDefaultName>
     <LocationField>Enabled</LocationField>
     <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
@@ -15,7 +15,7 @@
     <Icon>__TemplateIcon.ico</Icon>
   </TemplateData>
   <TemplateContent>
-    <Project TargetFileName="$safeprojectname$.csproj" File="Mosa.Starter.x86.csproj" ReplaceParameters="true" >
+    <Project TargetFileName="$safeprojectname$.csproj" File="MOSA.csproj" ReplaceParameters="true" >
       <Folder Name=".vs" TargetFolderName=".vs" />
       <Folder Name="Properties" TargetFolderName="Properties">
         <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>

@@ -13,15 +13,25 @@
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Mosa.Korlib" Version="*" />
-		<PackageReference Include="Mosa.Kernel.x86" Version="*" />
-		<PackageReference Include="Mosa.Platform.x86" Version="*" />
-		<PackageReference Include="Mosa.Runtime" Version="*" />
-		<PackageReference Include="Mosa.Tools.Package" Version="*" />
+		<Reference Include="Mosa.Korlib">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\mscorlib.dll</HintPath>
+    	</Reference>
+		<Reference Include="Mosa.Kernel.x86">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Kernel.x86.dll</HintPath>
+    	</Reference>
+		<Reference Include="Mosa.Platform.x86">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Platform.x86.dll</HintPath>
+    	</Reference>
+		<Reference Include="Mosa.Runtime">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Runtime.dll</HintPath>
+    	</Reference>
+		<Reference Include="Mosa.External">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.External.dll</HintPath>
+    	</Reference>
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<StartAction>Program</StartAction>
-		<StartProgram>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Tool.Bootstrap.exe</StartProgram>
+		<StartProgram>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Launcher.exe</StartProgram>
 		<StartArguments>$safeprojectname$.exe</StartArguments>
 	</PropertyGroup>
 </Project>

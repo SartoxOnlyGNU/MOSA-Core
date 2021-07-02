@@ -6,6 +6,8 @@
     <UseWindowsForms>true</UseWindowsForms>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<ApplicationManifest>app.manifest</ApplicationManifest>
+	<ApplicationIcon></ApplicationIcon>
+	<StartupObject>Launcher.Program</StartupObject>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -1,9 +1,9 @@
 {
 	"profiles": {
-		"$safeprojectname$": {
+		"MOSA1": {
 			"commandName": "Executable",
-			"executablePath": "C:\\Program Files (x86)\\MOSA-Project\\bin\\Mosa.Launcher.VisualStudio.exe",
-			"commandLineArgs": "$safeprojectname$.exe",
+			"executablePath": "C:\\Windows\\explorer.exe",
+			"commandLineArgs": "C:\\Program Files (x86)\\MOSA-Project\\bin\\Mosa.Launcher.exe",
 			"workingDirectory": "bin"
 		}
 	}

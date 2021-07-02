@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net472</TargetFramework>
+		<OutputType>Exe</OutputType>
+		<StartupObject>Mosa.Demo.Experiment.Boot</StartupObject>
+		<DebugType>full</DebugType>
+		<LangVersion>8.0</LangVersion>
+		<OutputPath>..\..\bin\</OutputPath>
+		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+		<DisableStandardFrameworkResolution>true</DisableStandardFrameworkResolution>
+		<DisableImplicitFrameworkReferences>true</DisableImplicitFrameworkReferences>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<StartAction>Program</StartAction>
+		<StartProgram>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Launcher.exe</StartProgram>
+		<StartArguments>Mosa.Demo.Experiment.exe</StartArguments>
+	</PropertyGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Mosa.Kernel.x86\Mosa.Kernel.x86.csproj" />
+	  <ProjectReference Include="..\Mosa.Korlib\Mosa.Korlib.csproj" />
+	  <ProjectReference Include="..\Mosa.Runtime.x86\Mosa.Runtime.x86.csproj" />
+	</ItemGroup>
+</Project>

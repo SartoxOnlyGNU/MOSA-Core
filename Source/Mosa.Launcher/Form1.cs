@@ -132,6 +132,8 @@ namespace Launcher
 						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')} output/MOSA.iso";
 					}));
 					Launch();
+
+					Environment.Exit(0);
 					break;
 			}
 		}

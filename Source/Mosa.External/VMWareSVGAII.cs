@@ -1,7 +1,7 @@
 ﻿using Mosa.Kernel.x86;
 using Mosa.Runtime;
 
-namespace Mosa.Starter.x86.Driver
+namespace Mosa.External
 {
     public class VMWareSVGAII
     {

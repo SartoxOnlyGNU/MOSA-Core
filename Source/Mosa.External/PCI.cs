@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 
-namespace Mosa.Starter.x86.Driver
+namespace Mosa.External
 {
     public enum ClassID
     {

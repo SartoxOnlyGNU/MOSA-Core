@@ -3,7 +3,7 @@
 using Mosa.Kernel.x86;
 using System;
 
-namespace Mosa.Starter.x86.Driver
+namespace Mosa.External
 {
     public class PCIDevice
     {

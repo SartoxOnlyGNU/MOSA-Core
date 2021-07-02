@@ -4,7 +4,7 @@
 #define MyAppName "MOSA-Project"
 #define MyAppPublisher "MOSA-Project"
 #define MyAppURL "http://www.mosa-project.org"
-#define MyAppVersion "1.0"
+#define MyAppVersion "20210703"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -47,6 +47,7 @@ Name: "{app}\lib"
 [Files]
 Source: "..\..\*.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\*.md"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\..\*.bat"; DestDir: "{app}"; Flags: ignoreversion
 
 ;Visual Studio Extension
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Boot.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
@@ -57,7 +58,7 @@ Source: "..\Mosa.VisualStudio.ProjectTemplate\__TemplateIcon.ico"; DestDir: "{us
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\launchSettings.json"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion
 
 ;Binaries
-;LIBs No Compiler,Test,And plugs
+;LIBs No Compiler,Workspace
 Source: "..\..\bin\Mosa.External.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Kernel.BareMetal.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Kernel.BareMetal.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
@@ -70,6 +71,10 @@ Source: "..\..\bin\Mosa.Platform.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ign
 Source: "..\..\bin\Mosa.Platform.Intel.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Platform.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Platform.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
+Source: "..\..\bin\Mosa.Plug.Korlib.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
+Source: "..\..\bin\Mosa.Plug.Korlib.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
+Source: "..\..\bin\Mosa.Plug.Korlib.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
+Source: "..\..\bin\Mosa.Plug.Korlib.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Runtime.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Runtime.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
 Source: "..\..\bin\Mosa.Runtime.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion

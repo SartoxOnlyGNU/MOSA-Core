@@ -21,6 +21,7 @@ namespace Launcher
 		enum Arch
 		{
 			x86,
+			x64,
 			ARMv8A32
 		}
 
@@ -33,10 +34,11 @@ namespace Launcher
         {
             InitializeComponent();
 
-			Debug.WriteLine(Dir);
+			toolStripStatusLabel1.Text = "";
 
 			//UI
 			comboBox1.Items.Add(Arch.x86.ToString());
+			comboBox1.Items.Add(Arch.x64.ToString() + "(Experimental)");
 			comboBox1.Items.Add(Arch.ARMv8A32.ToString());
 
 			//Settings
@@ -111,6 +113,8 @@ namespace Launcher
 
 		private void button2_Click(object sender, EventArgs e)
 		{
+			DateTime startTime = DateTime.Now;
+
 			if (Settings.GetValue("Launcher.HuntForCorLib", false))
 			{
 				var fileCorlib = Path.Combine(Dir, "mscorlib.dll");
@@ -157,7 +161,7 @@ namespace Launcher
 
 			GC.Collect();
 
-			Debug.WriteLine("Finished");
+			toolStripStatusLabel1.Text = $"Finished @{DateTime.Now - startTime}";
 		}
 	}
 }

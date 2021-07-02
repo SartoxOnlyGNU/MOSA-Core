@@ -33,14 +33,8 @@ The MOSA project consists of:
 
 * Compiler - a high quality, multithreaded, cross-platform, optimizing .NET compiler
 * Kernel - a small, micro-kernel operating system
-* Device Drivers Framework - a modular, device drivers framework and device drivers
-* Debugger - QEMU-based debugger
 
 Visit our [Website](http://www.mosa-project.org/) for more information about this project.
-
-### Join the Discussion
-
-Join us on [Gitter chat][gitter-chat]. This is the most interactive way to connect to MOSA's development team.
 
 ### License
 

@@ -35,8 +35,8 @@ namespace Launcher
 
 			//UI
 			comboBox1.Items.Add(Arch.x86.ToString());
-			comboBox1.Items.Add(Arch.x64.ToString() + "(Experimental)");
-			comboBox1.Items.Add(Arch.ARMv8A32.ToString());
+			//comboBox1.Items.Add(Arch.x64.ToString());
+			//comboBox1.Items.Add(Arch.ARMv8A32.ToString());
 
 			//Default Settings
 			Settings.SetValue("Compiler.BaseAddress", 0x00400000);

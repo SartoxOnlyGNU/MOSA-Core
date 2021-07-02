@@ -4,7 +4,7 @@
 #define MyAppName "MOSA-Project"
 #define MyAppPublisher "MOSA-Project"
 #define MyAppURL "http://www.mosa-project.org"
-#define MyAppVersion "0.1"
+#define MyAppVersion "1.0"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -50,7 +50,7 @@ Source: "..\..\*.md"; DestDir: "{app}"; Flags: ignoreversion
 
 ;Visual Studio Extension
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Boot.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\Mosa.Starter.x86.csproj"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
+Source: "..\Mosa.VisualStudio.ProjectTemplate\MOSA.csproj"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\MyTemplate.vstemplate"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Program.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\__TemplateIcon.ico"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion

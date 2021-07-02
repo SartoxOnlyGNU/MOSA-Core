@@ -27,7 +27,7 @@ namespace Launcher
 
 		string configFile = "Launcher.cfg";
 
-		public Form1()
+		public Form1(string[] args)
 		{
 			InitializeComponent();
 
@@ -93,12 +93,20 @@ namespace Launcher
 			//RegisterPlatfroms
 			RegisterPlatfroms();
 
-			//SetFile
-			if (File.Exists(configFile))
+			if(args.Length == 0)
 			{
-				string[] l = File.ReadAllText(configFile).Split('\n');
-				SetFile(l[0]);
+				//SetFile
+				if (File.Exists(configFile))
+				{
+					string[] l = File.ReadAllText(configFile).Split('\n');
+					SetFile(l[0]);
+				}
 			}
+			else
+			{
+				SetFile(Environment.CurrentDirectory + $@"\{args[0]}");
+			}
+			
 
 			//SetArch
 			SetArch(Arch.x86);

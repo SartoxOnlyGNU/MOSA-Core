@@ -2,16 +2,13 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net5.0-windows</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+	<OutputPath>..\..\bin\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
-	<ApplicationManifest>app.manifest</ApplicationManifest>
-	<ApplicationIcon></ApplicationIcon>
+	<ApplicationIcon>Mosa Icon.ico</ApplicationIcon>
 	<StartupObject>Launcher.Program</StartupObject>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <OutputPath>..\..\bin\</OutputPath>
+	<Platforms>AnyCPU;x64</Platforms>
   </PropertyGroup>
 
   <ItemGroup>

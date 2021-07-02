@@ -2,7 +2,7 @@
 	"profiles": {
 		"$safeprojectname$": {
 			"commandName": "Executable",
-			"executablePath": "C:\\Program Files (x86)\\MOSA-Project\\bin\\Mosa.Tool.Bootstrap.exe",
+			"executablePath": "C:\\Program Files (x86)\\MOSA-Project\\bin\\Mosa.Launcher.exe",
 			"commandLineArgs": "$safeprojectname$.exe",
 			"workingDirectory": "bin"
 		}

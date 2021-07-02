@@ -21,7 +21,15 @@ namespace Mosa.Compiler.Framework.CompilerStages
 
 			Compiler.PostEvent(CompilerEvent.LinkingStart);
 
-			File.Delete(CompilerSettings.OutputFile);
+			if (File.Exists(CompilerSettings.OutputFile))
+			{
+				File.Delete(CompilerSettings.OutputFile);
+			}
+
+			if (!Directory.Exists(Path.GetDirectoryName(CompilerSettings.OutputFile)))
+			{
+				Directory.CreateDirectory(Path.GetDirectoryName(CompilerSettings.OutputFile));
+			}
 
 			using (var file = new FileStream(CompilerSettings.OutputFile, FileMode.Create))
 			{

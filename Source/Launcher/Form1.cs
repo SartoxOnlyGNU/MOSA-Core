@@ -1,8 +1,10 @@
 ﻿using Mosa.Compiler.Common.Configuration;
 using Mosa.Compiler.Framework;
 using Mosa.Compiler.Framework.Linker;
+using Mosa.Compiler.Framework.Trace;
 using Mosa.Compiler.MosaTypeSystem;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 
@@ -22,6 +24,8 @@ namespace Launcher
 		static string Dir;
 
 		Arch arch = Arch.x86;
+
+		string configFile = "Launcher.cfg";
 
 		public Form1()
 		{
@@ -84,15 +88,43 @@ namespace Launcher
 			Settings.SetValue("Launcher.HuntForCorLib", true);
 			Settings.SetValue("Linker.Drawf", false);
 			Settings.SetValue("OS.Name", "MOSA");
+			Settings.SetValue("Compiler.OutputFile", Environment.CurrentDirectory + @"\Output\ISO\main.exe");
 
 			//RegisterPlatfroms
 			RegisterPlatfroms();
 
 			//SetFile
-			SetFile(@"C:\Users\Fanfa Ni\source\repos\Mosa.Starter.x86\Mosa.Starter.x86\bin\Mosa.Starter.x86.exe");
+			if (File.Exists(configFile))
+			{
+				string[] l = File.ReadAllText(configFile).Split('\n');
+				SetFile(l[0]);
+			}
 
 			//SetArch
 			SetArch(Arch.x86);
+
+			CompilerHooks = new CompilerHooks();
+			CompilerHooks.NotifyEvent = NotifyEvent;
+		}
+
+		DateTime startTime;
+
+		void NotifyEvent(CompilerEvent e,string message,int threadID)
+		{
+			switch (e)
+			{
+				case CompilerEvent.CompileStart:
+					startTime = DateTime.Now;
+					break;
+				case CompilerEvent.CompileEnd:
+					MakeISO();
+					TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
+					this.Invoke(new Action(() =>
+					{
+						toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds.ToString().PadLeft(2, '0')}";
+					}));
+					break;
+			}
 		}
 
 		private void RegisterPlatfroms()
@@ -102,13 +134,12 @@ namespace Launcher
 			PlatformRegistry.Add(new Mosa.Platform.ARMv8A32.Architecture());
 		}
 
-		CompilerHooks CompilerHooks = new CompilerHooks();
+		CompilerHooks CompilerHooks;
 		public MosaLinker Linker;
 		public TypeSystem TypeSystem;
 
 		private void button2_Click(object sender, EventArgs e)
 		{
-			DateTime startTime = DateTime.Now;
 			try
 			{
 				if (Settings.GetValue("Launcher.HuntForCorLib", false))
@@ -156,14 +187,27 @@ namespace Launcher
 				TypeSystem = compiler.TypeSystem;
 
 				GC.Collect();
-
-				TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
-				toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds}";
 			}
-			catch (Exception E)
+			catch (NotImplementedException)
 			{
-				toolStripStatusLabel1.Text = $"Faild To Compile:{E.Message}";
+				toolStripStatusLabel1.Text = $"Faild To Compile";
 			}
+		}
+
+		private void MakeISO()
+		{
+			DirectoryInfo directoryInfo = new DirectoryInfo("../Tools/syslinux");
+			foreach(var v in directoryInfo.GetFiles())
+			{
+				if (!Directory.Exists(Environment.CurrentDirectory + @"\Output\ISO"))
+				{
+					Directory.CreateDirectory(Environment.CurrentDirectory + @"\Output\ISO");
+				}
+				v.CopyTo(Environment.CurrentDirectory + @"\Output\ISO\" + v.Name, true);
+			}
+
+			var args = $"-relaxed-filenames -J -R -o \"{Environment.CurrentDirectory + @"\Output\system.iso"}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{Environment.CurrentDirectory + @"\Output\ISO"}\"";
+			Process.Start("../Tools/mkisofs/mkisofs.exe", args);
 		}
 
 		private void button1_Click(object sender, EventArgs e)
@@ -177,6 +221,8 @@ namespace Launcher
 
 		private void SetFile(string name)
 		{
+			File.WriteAllText(configFile, $"{name}");
+
 			FileName = name;
 
 			Dir = FileName.Substring(0, FileName.LastIndexOf(@"\"));

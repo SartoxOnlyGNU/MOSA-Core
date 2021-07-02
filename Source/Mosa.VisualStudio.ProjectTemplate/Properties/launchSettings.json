@@ -1,6 +1,6 @@
 {
 	"profiles": {
-		"$safeprojectname$": {
+		"Launcher": {
 			"commandName": "Executable",
 			"executablePath": "C:\\Windows\\explorer.exe",
 			"commandLineArgs": "C:\\Program Files (x86)\\MOSA-Project\\Launcher.bat",

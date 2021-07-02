@@ -3,21 +3,13 @@ using Mosa.Compiler.Framework;
 using Mosa.Compiler.Framework.Linker;
 using Mosa.Compiler.MosaTypeSystem;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Launcher
 {
-    public partial class Form1 : Form
-    {
+	public partial class Form1 : Form
+	{
 		enum Arch
 		{
 			x86,
@@ -26,13 +18,14 @@ namespace Launcher
 		}
 
 		Settings Settings = new Settings();
-		static string FileName = @"C:\Users\Fanfa Ni\source\repos\Mosa.Starter.x86\Mosa.Starter.x86\bin\Mosa.Starter.x86.exe";
-		static string Dir = FileName.Substring(0, FileName.LastIndexOf(@"\"));
+		static string FileName;
+		static string Dir;
 
+		Arch arch = Arch.x86;
 
 		public Form1()
-        {
-            InitializeComponent();
+		{
+			InitializeComponent();
 
 			toolStripStatusLabel1.Text = "";
 
@@ -41,14 +34,11 @@ namespace Launcher
 			comboBox1.Items.Add(Arch.x64.ToString() + "(Experimental)");
 			comboBox1.Items.Add(Arch.ARMv8A32.ToString());
 
-			//Settings
-			Settings.AddPropertyListValue("Compiler.SourceFiles", FileName);
-			Settings.AddPropertyListValue("SearchPaths", Path.GetDirectoryName(FileName));
+			//Default Settings
 			Settings.SetValue("Compiler.BaseAddress", 0x00400000);
 			Settings.SetValue("Compiler.Binary", true);
 			Settings.SetValue("Compiler.MethodScanner", false);
 			Settings.SetValue("Compiler.Multithreading", true);
-			Settings.SetValue("Compiler.Platform", "x86");
 			Settings.SetValue("Compiler.TraceLevel", 0);
 			Settings.SetValue("Compiler.Multithreading", true);
 			Settings.SetValue("CompilerDebug.DebugFile", string.Empty);
@@ -98,6 +88,11 @@ namespace Launcher
 			//RegisterPlatfroms
 			RegisterPlatfroms();
 
+			//SetFile
+			SetFile(@"C:\Users\Fanfa Ni\source\repos\Mosa.Starter.x86\Mosa.Starter.x86\bin\Mosa.Starter.x86.exe");
+
+			//SetArch
+			SetArch(Arch.x86);
 		}
 
 		private void RegisterPlatfroms()
@@ -114,54 +109,97 @@ namespace Launcher
 		private void button2_Click(object sender, EventArgs e)
 		{
 			DateTime startTime = DateTime.Now;
-
-			if (Settings.GetValue("Launcher.HuntForCorLib", false))
+			try
 			{
-				var fileCorlib = Path.Combine(Dir, "mscorlib.dll");
-
-				if (fileCorlib != null)
+				if (Settings.GetValue("Launcher.HuntForCorLib", false))
 				{
-					Settings.AddPropertyListValue("Compiler.SourceFiles", fileCorlib);
-				}
-			}
+					var fileCorlib = Path.Combine(Dir, "mscorlib.dll");
 
-			if (Settings.GetValue("Launcher.PlugKorlib", false))
+					if (fileCorlib != null)
+					{
+						Settings.AddPropertyListValue("Compiler.SourceFiles", fileCorlib);
+					}
+				}
+
+				if (Settings.GetValue("Launcher.PlugKorlib", false))
+				{
+					var fileKorlib = Path.Combine(Dir, "Mosa.Plug.Korlib.dll");
+
+					if (fileKorlib != null)
+					{
+						Settings.AddPropertyListValue("Compiler.SourceFiles", fileKorlib);
+					}
+
+					var platform = Settings.GetValue("Compiler.Platform", "x86");
+
+					if (platform == "armv8a32")
+					{
+						platform = "ARMv8A32";
+					}
+
+					var fileKorlibPlatform = Path.Combine(Dir, $"Mosa.Plug.Korlib.{platform}.dll");
+
+					if (fileKorlibPlatform != null)
+					{
+						Settings.AddPropertyListValue("Compiler.SourceFiles", fileKorlibPlatform);
+					}
+				}
+
+				var compiler = new MosaCompiler(Settings, CompilerHooks);
+
+				compiler.Load();
+				compiler.Initialize();
+				compiler.Setup();
+				compiler.Compile();
+
+				Linker = compiler.Linker;
+				TypeSystem = compiler.TypeSystem;
+
+				GC.Collect();
+
+				TimeSpan timeSpan = DateTime.Now.Subtract(startTime);
+				toolStripStatusLabel1.Text = $"Finished {timeSpan.Hours.ToString().PadLeft(2, '0')}:{timeSpan.Minutes.ToString().PadLeft(2, '0')}:{timeSpan.Seconds}";
+			}
+			catch (Exception E)
 			{
-				var fileKorlib = Path.Combine(Dir, "Mosa.Plug.Korlib.dll");
-
-				if (fileKorlib != null)
-				{
-					Settings.AddPropertyListValue("Compiler.SourceFiles", fileKorlib);
-				}
-
-				var platform = Settings.GetValue("Compiler.Platform", "x86");
-
-				if (platform == "armv8a32")
-				{
-					platform = "ARMv8A32";
-				}
-
-				var fileKorlibPlatform = Path.Combine(Dir, $"Mosa.Plug.Korlib.{platform}.dll");
-
-				if (fileKorlibPlatform != null)
-				{
-					Settings.AddPropertyListValue("Compiler.SourceFiles", fileKorlibPlatform);
-				}
+				toolStripStatusLabel1.Text = $"Faild To Compile:{E.Message}";
 			}
+		}
 
-			var compiler = new MosaCompiler(Settings, CompilerHooks);
+		private void button1_Click(object sender, EventArgs e)
+		{
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Filter = "|*.exe";
+			openFileDialog.ShowDialog();
 
-			compiler.Load();
-			compiler.Initialize();
-			compiler.Setup();
-			compiler.Compile();
+			SetFile(openFileDialog.FileName);
+		}
 
-			Linker = compiler.Linker;
-			TypeSystem = compiler.TypeSystem;
+		private void SetFile(string name)
+		{
+			FileName = name;
 
-			GC.Collect();
+			Dir = FileName.Substring(0, FileName.LastIndexOf(@"\"));
 
-			toolStripStatusLabel1.Text = $"Finished @{DateTime.Now - startTime}";
+			Settings.ClearProperty("Compiler.SourceFiles");
+			Settings.ClearProperty("SearchPaths");
+
+			Settings.AddPropertyListValue("Compiler.SourceFiles", FileName);
+			Settings.AddPropertyListValue("SearchPaths", Path.GetDirectoryName(FileName));
+
+			label1.Text = $"File: {Path.GetFileName(FileName)}";
+		}
+
+		private void SetArch(Arch _arch)
+		{
+			arch = _arch;
+			Settings.SetValue("Compiler.Platform", arch.ToString());
+			comboBox1.SelectedIndex = (int)arch;
+		}
+
+		private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SetArch((Arch)comboBox1.SelectedIndex);
 		}
 	}
 }

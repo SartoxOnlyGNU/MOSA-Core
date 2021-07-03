@@ -4,7 +4,7 @@ using System;
 
 namespace Mosa.External
 {
-    static class Memory
+    public static class Memory
     {
         public static MemoryBlock GetPhysicalMemory(Pointer address, uint size)
         {
@@ -17,7 +17,16 @@ namespace Mosa.External
 
             return new MemoryBlock(address, size);
         }
-    }
+
+		/// <summary>
+		/// Max 4GB
+		/// </summary>
+		/// <returns></returns>
+		public static uint GetAvailableMemory()
+		{
+			return (PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize;
+		}
+	}
 
 	public readonly struct MemoryBlock
 	{

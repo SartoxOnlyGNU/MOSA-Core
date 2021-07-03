@@ -1,5 +1,6 @@
 ﻿// Copyright (c) MOSA Project. Licensed under the New BSD License.
 
+using Mosa.External;
 using Mosa.Kernel.x86;
 
 namespace Mosa.Demo.Experiment
@@ -19,7 +20,7 @@ namespace Mosa.Demo.Experiment
 			while (true)
 			{
 				Screen.Goto(0, 0);
-				Screen.Write("This Size:"+sizeof(Boot));
+				Screen.Write("Available Memory:"+Memory.GetAvailableMemory().ToString("x2"));
 			}
 		}
 

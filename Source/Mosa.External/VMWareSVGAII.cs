@@ -56,7 +56,11 @@ namespace Mosa.External
         public uint width;
         public uint depth;
 
-        public VMWareSVGAII()
+
+		/// <summary>
+		/// Before using this. Make sure you've setup PCI
+		/// </summary>
+		public VMWareSVGAII()
         {
             device = (PCI.GetDevice(VendorID.VMWare, DeviceID.SVGAIIAdapter));
             device.EnableMemory(true);

@@ -35,9 +35,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
 
-[Icons]
-Name: "{userdesktop}\MOSA Launcher";Filename:"{app}\bin\Mosa.Launcher.exe";WorkingDir:"{app}\bin"
-
 [Run]
 
 [Dirs]

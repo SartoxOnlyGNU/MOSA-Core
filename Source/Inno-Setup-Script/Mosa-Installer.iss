@@ -54,35 +54,12 @@ Source: "..\Mosa.VisualStudio.ProjectTemplate\Boot.cs"; DestDir: "{userdocs}\Vis
 Source: "..\Mosa.VisualStudio.ProjectTemplate\MOSA.csproj"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\MyTemplate.vstemplate"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Program.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
+Source: "..\Mosa.VisualStudio.ProjectTemplate\README.txt"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\__TemplateIcon.ico"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\launchSettings.json"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion
+Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\Run.bat"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion
 
-;Binaries
-;LIBs No Compiler,Workspace
-Source: "..\..\bin\Mosa.External.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.BareMetal.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.BareMetal.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.BareMetal.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.BareMetal.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Kernel.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Launcher.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Platform.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Platform.Intel.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Platform.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Platform.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Plug.Korlib.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Plug.Korlib.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Plug.Korlib.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Plug.Korlib.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Runtime.ARMv8A32.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Runtime.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Runtime.x64.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-Source: "..\..\bin\Mosa.Runtime.x86.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-;Korlib
-Source: "..\..\bin\mscorlib.dll"; DestDir: "{app}\lib"; Flags: ignoreversion
-
-;For Mosa.Launcher     
+   
 Source: "..\..\bin\*.*"; DestDir: "{app}\bin"; Flags: ignoreversion
 
 

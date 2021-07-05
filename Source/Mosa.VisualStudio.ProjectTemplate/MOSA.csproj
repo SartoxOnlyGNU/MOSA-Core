@@ -14,33 +14,33 @@
 	</PropertyGroup>
 	<ItemGroup>
 		<Reference Include="Mosa.Korlib">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\mscorlib.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\mscorlib.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Kernel.x86">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Kernel.x86.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Kernel.x86.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Platform.x86">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Platform.x86.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Platform.x86.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Runtime">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Runtime.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Runtime.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.External">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.External.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.External.dll</HintPath>
     	</Reference>
     	<Reference Include="Mosa.Plug.Korlib">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Plug.Korlib.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Plug.Korlib.dll</HintPath>
     	</Reference>
     	<Reference Include="Mosa.Plug.Korlib.x86">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Plug.Korlib.x86.dll</HintPath>
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Plug.Korlib.x86.dll</HintPath>
     	</Reference>
 		<Reference Include="Mosa.Runtime.x86">
-			<HintPath>C:\Program Files (x86)\MOSA-Project\lib\Mosa.Runtime.x86.dll</HintPath>
+			<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Runtime.x86.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
 		<StartAction>Program</StartAction>
-		<StartProgram>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Launcher.exe</StartProgram>
+		<StartProgram>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Launcher.Console.exe</StartProgram>
 		<StartArguments>$safeprojectname$.exe</StartArguments>
 	</PropertyGroup>
 </Project>

@@ -1,3 +1,7 @@
+@echo off
+echo Have you compiled this Solution? if so press any key to continue !
+pause
+
 rem set INNOSETUP=C:\Program Files (x86)\Inno Setup 5\ISCC.exe
 set INNOSETUP=C:\Program Files (x86)\Inno Setup 6\ISCC.exe
 

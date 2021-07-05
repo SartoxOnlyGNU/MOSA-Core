@@ -1,6 +1,6 @@
 # A different branch from mosa/MOSA-Project
-#### One of my MOSA demos(Not included)
-![GIF 2021-7-2 0-58-51](https://user-images.githubusercontent.com/54205437/124325090-a7c26d80-dbb6-11eb-8146-04f100888244.gif)
+#### One of my MOSA demos(https://github.com/nifanfa/MOSA-GUI-Sample)
+![Overview](https://github.com/nifanfa/MOSA-GUI-Sample/blob/master/QQ%E6%88%AA%E5%9B%BE20210704183152.png)
 
 # In MOSA. Before use a class. Call setup first if there is.
 

@@ -30,10 +30,10 @@ namespace Mosa.Kernel.x86
 		/// <value>
 		/// The column.
 		/// </value>
-		public static uint Column
+		public static uint CursorLeft
 		{
 			get { return column; }
-			set { column = value; }
+			private set { column = value; }
 		}
 
 		/// <summary>
@@ -42,10 +42,10 @@ namespace Mosa.Kernel.x86
 		/// <value>
 		/// The row.
 		/// </value>
-		public static uint Row
+		public static uint CursorTop
 		{
 			get { return row; }
-			set { row = value; }
+			private set { row = value; }
 		}
 
 		public static byte Color
@@ -65,27 +65,35 @@ namespace Mosa.Kernel.x86
 		/// </summary>
 		private static void Next()
 		{
-			Column++;
+			CursorLeft++;
 
-			if (Column >= Columns)
+			if (CursorLeft >= Columns)
 			{
-				Column = 0;
-				Row++;
+				CursorLeft = 0;
+				CursorTop++;
 			}
 		}
 
 		private static void Previous()
 		{
-			if (Column >= 0 && Row >= 0)
+			if (CursorLeft >= 0 && CursorTop >= 0)
 			{
-				if(Column == 0 && Row != 0)
+				if(CursorLeft == 0 && CursorTop == 0)
 				{
-					Row--;
-					Column = Columns - 1;
+					return;
+				}
+
+				if(CursorLeft == 0)
+				{
+					if(CursorTop != 0)
+					{
+						CursorTop--;
+					}
+					CursorLeft = Columns - 1;
 				}
 				else
 				{
-					Column--;
+					CursorLeft--;
 				}
 			}
 		}
@@ -94,8 +102,8 @@ namespace Mosa.Kernel.x86
 		{
 			Previous();
 			UpdateCursor();
-			Native.Set8(0x0B8000 + ((Row * Columns + Column) * 2), (byte)' ');
-			Native.Set8(0x0B8000 + ((Row * Columns + Column) * 2) + 1, color);
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2), (byte)' ');
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2) + 1, color);
 		}
 
 		/// <summary>
@@ -112,33 +120,20 @@ namespace Mosa.Kernel.x86
 		/// Writes the character.
 		/// </summary>
 		/// <param name="chr">The character.</param>
-		public static void RawWrite(uint row, uint column, char chr, byte color)
+		private static void Write(char chr)
 		{
-			var address = new Pointer(0x0B8000 + ((row * Columns + column) * 2));
-
-			address.Store8((byte)chr);
-			address.Store8(1, color);
-		}
-
-		/// <summary>
-		/// Writes the character.
-		/// </summary>
-		/// <param name="chr">The character.</param>
-		public static void Write(char chr)
-		{
-			if(Row == Rows)
+			if(CursorTop == Rows)
 			{
 				Native.Memory_Copy(0x0B8000, 0x0B80A0, 0xF00);
 				Native.Memory_ZeroFill(0xB8F00, 0xA0);
 				SetCursorPosition(0, Rows - 1);
 			}
 
-			var address = new Pointer(0x0B8000 + ((Row * Columns + Column) * 2));
-
-			address.Store8((byte)chr);
-			address.Store8(1, color);
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2), (byte)chr);
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2) + 1, color);
 
 			Next();
+
 			UpdateCursor();
 		}
 
@@ -160,8 +155,8 @@ namespace Mosa.Kernel.x86
 		/// </summary>
 		private static void GotoTop()
 		{
-			Column = 0;
-			Row = 0;
+			CursorLeft = 0;
+			CursorTop = 0;
 			UpdateCursor();
 		}
 
@@ -176,10 +171,10 @@ namespace Mosa.Kernel.x86
 		/// <summary>
 		/// Goto the next line.
 		/// </summary>
-		public static void NextLine()
+		private static void NextLine()
 		{
-			Column = 0;
-			Row++;
+			CursorLeft = 0;
+			CursorTop++;
 			UpdateCursor();
 		}
 
@@ -217,8 +212,8 @@ namespace Mosa.Kernel.x86
 		/// <param name="col">The col.</param>
 		public static void SetCursorPosition(uint left, uint top)
 		{
-			Row = top;
-			Column = left;
+			CursorTop = top;
+			CursorLeft = left;
 			UpdateCursor();
 		}
 
@@ -227,7 +222,7 @@ namespace Mosa.Kernel.x86
 		/// </summary>
 		/// <param name="row">The row.</param>
 		/// <param name="column">The column.</param>
-		public static void SetCursor(uint row, uint column)
+		private static void SetCursor(uint row, uint column)
 		{
 			uint location = (row * Columns) + column;
 
@@ -238,75 +233,9 @@ namespace Mosa.Kernel.x86
 			Native.Out8(0x3D5, (byte)((location >> 8) & 0xFF));
 		}
 
-		public static void UpdateCursor()
+		private static void UpdateCursor()
 		{
-			SetCursor(Row, Column);
-		}
-
-		public static void ClearRow()
-		{
-			uint c = Column;
-			uint r = Row;
-
-			Column = 0;
-
-			for (int i = 0; i < Columns; i++)
-			{
-				Write(' ');
-			}
-
-			SetCursorPosition(c, r);
-		}
-
-		/// <summary>
-		/// Writes the specified value.
-		/// </summary>
-		/// <param name="val">The val.</param>
-		public static void Write(uint val)
-		{
-			Write(val, 10, -1);
-		}
-
-		/// <summary>
-		/// Writes the specified value.
-		/// </summary>
-		/// <param name="val">The val.</param>
-		/// <param name="digits">The digits.</param>
-		/// <param name="size">The size.</param>
-		public static void Write(uint val, byte digits, int size)
-		{
-			uint count = 0;
-			uint temp = val;
-
-			do
-			{
-				temp /= digits;
-				count++;
-			} while (temp != 0);
-
-			if (size != -1)
-				count = (uint)size;
-
-			uint x = Column;
-			uint y = Row;
-
-			for (uint i = 0; i < count; i++)
-			{
-				uint digit = val % digits;
-				Column = x;
-				Row = y;
-				Skip(count - 1 - i);
-				if (digit < 10)
-					Write((char)('0' + digit));
-				else
-					Write((char)('A' + digit - 10));
-				val /= digits;
-			}
-
-			Column = x;
-			Row = y;
-			Skip(count);
-			UpdateCursor();
+			SetCursor(CursorTop, CursorLeft);
 		}
 	}
 }

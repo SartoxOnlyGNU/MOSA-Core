@@ -1,6 +1,5 @@
 ﻿// Copyright (c) MOSA Project. Licensed under the New BSD License.
 
-using Mosa.Kernel.x86.Helpers;
 using Mosa.Runtime;
 
 namespace Mosa.Kernel.x86
@@ -82,8 +81,6 @@ namespace Mosa.Kernel.x86
 		/// <returns></returns>
 		public static uint Reserve(uint size)
 		{
-			Assert.True(initialized, "VirtualPageAllocator is not initialized");
-
 			uint first = 0xFFFFFFFF; // Marker
 			uint requested = ((size - 1) / PageFrameAllocator.PageSize) + 1;
 
@@ -107,7 +104,6 @@ namespace Mosa.Kernel.x86
 					first = 0xFFFFFFFF;
 				}
 			}
-			Assert.True(false, "VirtualPageAllocator cannot reserve memory");
 			return 0;
 		}
 

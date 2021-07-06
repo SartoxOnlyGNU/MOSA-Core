@@ -12,6 +12,7 @@ namespace MOSA1
 
             IDT.SetInterruptHandler(ProcessInterrupt);
 
+            Console.BackgroundColor = ConsoleColor.Black;
             Console.Clear();
             Console.SetCursorPosition(0, 0);
             Console.Color = ConsoleColor.White;
@@ -27,7 +28,23 @@ namespace MOSA1
                 if (PS2Keyboard.KeyAvailable) 
                 {
                     keyCode = PS2Keyboard.GetKeyPressed();
-                    Console.Write(PS2Keyboard.KeyCodeToString(keyCode));
+                    switch (keyCode) 
+                    {
+                        case PS2Keyboard.KeyCode.Delete:
+                            Console.RemovePreviousOne();
+                            break;
+
+                        default:
+                            if (PS2Keyboard.IsCapsLock)
+                            {
+                                Console.Write(PS2Keyboard.KeyCodeToString(keyCode));
+                            }
+                            else
+                            {
+                                Console.Write(PS2Keyboard.KeyCodeToString(keyCode).ToLower());
+                            }
+                            break;
+                    }
                 }
             }
         }

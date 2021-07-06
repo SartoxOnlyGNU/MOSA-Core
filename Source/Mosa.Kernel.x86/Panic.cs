@@ -68,8 +68,7 @@ namespace Mosa.Kernel.x86
 				if (!entry.Skip)
 				{
 					Console.Write(entry.ToString());
-					Console.Row++;
-					Console.Column = 0;
+					Console.WriteLine();
 				}
 
 				depth++;

@@ -55,7 +55,9 @@ namespace Mosa.Launcher.Console
 		}
 
 		public static string AppFolder = @"C:\Program Files (x86)\MOSA-Project";
-		public static string VMRunPath = @"C:\Program Files (x86)\VMware\VMware Workstation\vmrun.exe";
+		public static string VMPlayerPath0 = @"C:\Program Files (x86)\VMware\VMware Workstation\vmplayer.exe";
+		public static string VMPlayerPath1 = @"C:\Program Files (x86)\VMware\VMware Player\vmplayer.exe";
+
 		public static string ISOFilePath
 		{
 			get
@@ -105,15 +107,9 @@ namespace Mosa.Launcher.Console
 
 			RunVMWareWorkstation();
 
-			Finish();
-			return;
-		}
-
-		private static void Finish()
-		{
-			System.Console.WriteLine("Press Any Key To Continue...");
-			System.Console.ReadKey();
 			Environment.Exit(0);
+
+			return;
 		}
 
 		private static void Compile()
@@ -169,7 +165,9 @@ namespace Mosa.Launcher.Console
 			catch (Exception)
 			{
 				System.Console.WriteLine("Exception Thrown While Compiling");
-				Finish();
+				System.Console.WriteLine("Press Any Key To Continue...");
+				System.Console.ReadKey();
+				Environment.Exit(0);
 			}
 		}
 
@@ -187,9 +185,9 @@ namespace Mosa.Launcher.Console
 
 		private static void RunVMWareWorkstation()
 		{
-			if (!File.Exists(VMRunPath))
+			if (!File.Exists(VMPlayerPath0) && !File.Exists(VMPlayerPath1))
 			{
-				System.Console.WriteLine("VMWare Workstation Not Found!");
+				System.Console.WriteLine("VMWare Player Not Found!");
 				return;
 			}
 
@@ -199,13 +197,22 @@ namespace Mosa.Launcher.Console
 				v.CopyTo(Path.Combine(OutputFolder, v.Name), true);
 			}
 
-			var args = $"start \"{Path.Combine(OutputFolder,"MOSA.vmx")}\"";
+			var args = '"' + Path.Combine(OutputFolder, "MOSA.vmx") + '"';
 
 
 			ProcessStartInfo processStartInfo = new ProcessStartInfo();
 			processStartInfo.UseShellExecute = true;
 			processStartInfo.Arguments = args;
-			processStartInfo.FileName = VMRunPath;
+
+			if (File.Exists(VMPlayerPath0))
+			{
+				processStartInfo.FileName = VMPlayerPath0;
+			}
+			if (File.Exists(VMPlayerPath1))
+			{
+				processStartInfo.FileName = VMPlayerPath1;
+			}
+
 			Process.Start(processStartInfo);
 		}
 

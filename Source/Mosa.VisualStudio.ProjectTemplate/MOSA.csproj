@@ -25,8 +25,8 @@
 		<Reference Include="Mosa.Runtime">
       		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Runtime.dll</HintPath>
     	</Reference>
-		<Reference Include="Mosa.External">
-      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.External.dll</HintPath>
+		<Reference Include="Mosa.External.x86">
+      		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.External.x86.dll</HintPath>
     	</Reference>
     	<Reference Include="Mosa.Plug.Korlib">
       		<HintPath>C:\Program Files (x86)\MOSA-Project\bin\Mosa.Plug.Korlib.dll</HintPath>

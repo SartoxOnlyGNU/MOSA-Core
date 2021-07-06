@@ -51,7 +51,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{1D35F87A
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{D240E720-CC73-4E25-90A9-DC5121DA594A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mosa.External", "Mosa.External\Mosa.External.csproj", "{C747B3CA-2261-4AD4-97DB-FA6DFD66070E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mosa.External.x86", "Mosa.External.x86\Mosa.External.x86.csproj", "{C747B3CA-2261-4AD4-97DB-FA6DFD66070E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mosa.Launcher.Console", "Mosa.Launcher.Console\Mosa.Launcher.Console.csproj", "{6E52E67F-6FA3-4FDC-ACB5-1F570822512C}"
 EndProject

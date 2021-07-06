@@ -18,10 +18,6 @@ namespace Mosa.External
             return new MemoryBlock(address, size);
         }
 
-		/// <summary>
-		/// Max 4GB
-		/// </summary>
-		/// <returns></returns>
 		public static uint GetAvailableMemory()
 		{
 			return (PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize;

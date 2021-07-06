@@ -2,7 +2,7 @@
 using Mosa.Runtime;
 using System;
 
-namespace Mosa.External
+namespace Mosa.External.x86
 {
     public static class Memory
     {

@@ -78,7 +78,7 @@ namespace Mosa.Kernel.x86
 		{
 			if (Column >= 0 && Row >= 0)
 			{
-				if(Column == 0)
+				if(Column == 0 && Row != 0)
 				{
 					Row--;
 					Column = Columns - 1;

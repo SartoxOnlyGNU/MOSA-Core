@@ -33,6 +33,9 @@ namespace MOSA1
                         case PS2Keyboard.KeyCode.Delete:
                             Console.RemovePreviousOne();
                             break;
+                        case PS2Keyboard.KeyCode.Enter:
+                            Console.WriteLine();
+                            break;
 
                         default:
                             if (PS2Keyboard.IsCapsLock)

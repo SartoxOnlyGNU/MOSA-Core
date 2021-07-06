@@ -74,6 +74,30 @@ namespace Mosa.Kernel.x86
 			}
 		}
 
+		private static void Previous()
+		{
+			if (Column > 0 && Row >= 0)
+			{
+				if(Column == 0)
+				{
+					Row--;
+					Column = Columns - 1;
+				}
+				else
+				{
+					Column--;
+				}
+			}
+		}
+
+		public static void RemovePreviousOne()
+		{
+			Previous();
+			UpdateCursor();
+			Native.Set8(0x0B8000 + ((Row * Columns + Column) * 2), (byte)' ');
+			Native.Set8(0x0B8000 + ((Row * Columns + Column) * 2) + 1, color);
+		}
+
 		/// <summary>
 		/// Skips the specified skip.
 		/// </summary>

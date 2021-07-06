@@ -2149,8 +2149,6 @@ namespace Mosa.Kernel.x86
 		{
 			var stack = (IDTStack*)stackStatePointer;
 
-			Debugger.Process(stack);
-
 			switch (stack->Interrupt)
 			{
 				case 0:

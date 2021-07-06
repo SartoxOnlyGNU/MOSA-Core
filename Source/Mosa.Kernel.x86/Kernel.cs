@@ -34,7 +34,6 @@ namespace Mosa.Kernel.x86
 			// At this point we can use objects
 			Scheduler.Setup();
 			SmbiosManager.Setup();
-			ConsoleManager.Setup();
 
 			Logger.Log("Kernel initialized");
 		}

@@ -36,80 +36,17 @@ namespace Mosa.Kernel.x86
 		{
 			IDT.SetInterruptHandler(null);
 
-			Screen.BackgroundColor = ScreenColor.Blue;
+			Console.BackgroundColor = ConsoleColor.Black;
 
-			Screen.Clear();
-			Screen.Goto(1, 0);
-			Screen.Color = ScreenColor.White;
-			Screen.Write("*** Kernel Panic ***");
+			Console.Clear();
+			Console.WriteLine("Kernel Panic !");
 
-			if (firstError)
-				firstError = false;
-			else
-				Screen.Write(" (multiple)");
-
-			Screen.NextLine();
-			Screen.NextLine();
-			Screen.Write(message);
-			Screen.NextLine();
-			Screen.NextLine();
-			Screen.Write("REGISTERS:");
-			Screen.NextLine();
-			Screen.NextLine();
-			DumpRegisters();
-			Screen.NextLine();
-			Screen.Write("STACK TRACE:");
-			Screen.NextLine();
-			Screen.NextLine();
 			DumpStackTrace();
 
 			while (true)
 			{
-				// keep debugger running
-				unsafe
-				{
-					Debugger.Process(null);
-				}
-
 				Native.Hlt();
 			}
-		}
-
-		public static void DumpRegisters()
-		{
-			Screen.Write("EIP: ");
-			Screen.Write(EIP, 16, 8);
-			Screen.Write(" ESP: ");
-			Screen.Write(ESP, 16, 8);
-			Screen.Write(" EBP: ");
-			Screen.Write(EBP, 16, 8);
-			Screen.Write(" EFLAGS: ");
-			Screen.Write(EFLAGS, 16, 8);
-			Screen.Write(" CR2: ");
-			Screen.Write(CR2, 16, 8);
-			Screen.NextLine();
-			Screen.Write("EAX: ");
-			Screen.Write(EAX, 16, 8);
-			Screen.Write(" EBX: ");
-			Screen.Write(EBX, 16, 8);
-			Screen.Write(" ECX: ");
-			Screen.Write(ECX, 16, 8);
-			Screen.Write(" CS: ");
-			Screen.Write(CS, 16, 8);
-			Screen.Write(" FS: ");
-			Screen.Write(FS, 16, 8);
-			Screen.NextLine();
-			Screen.Write("EDX: ");
-			Screen.Write(EDX, 16, 8);
-			Screen.Write(" EDI: ");
-			Screen.Write(EDI, 16, 8);
-			Screen.Write(" ESI: ");
-			Screen.Write(ESI, 16, 8);
-			Screen.Write(" ERROR: ");
-			Screen.Write(ErrorCode, 16, 2);
-			Screen.Write(" IRQ: ");
-			Screen.Write(Interrupt, 16, 2);
-			Screen.NextLine();
 		}
 
 		public static void DumpStackTrace()
@@ -128,9 +65,9 @@ namespace Mosa.Kernel.x86
 
 				if (!entry.Skip)
 				{
-					Screen.Write(entry.ToString());
-					Screen.Row++;
-					Screen.Column = 0;
+					Console.Write(entry.ToString());
+					Console.Row++;
+					Console.Column = 0;
 				}
 
 				depth++;

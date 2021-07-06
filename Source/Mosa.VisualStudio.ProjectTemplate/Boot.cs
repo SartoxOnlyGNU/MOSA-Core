@@ -2,7 +2,7 @@
 
 using Mosa.Kernel.x86;
 
-namespace $safeprojectname$
+namespace MOSA1
 {
     public static class Boot
     {
@@ -12,9 +12,9 @@ namespace $safeprojectname$
 
             IDT.SetInterruptHandler(ProcessInterrupt);
 
-            Screen.Clear();
-            Screen.Goto(0, 0);
-            Screen.Color = ScreenColor.White;
+            Console.Clear();
+            Console.SetCursorPosition(0, 0);
+            Console.Color = ConsoleColor.White;
 
             Program.Setup();
 

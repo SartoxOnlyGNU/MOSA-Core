@@ -27,14 +27,14 @@ namespace Mosa.Kernel.x86.Helpers
 		{
 			if (value == null)
 				return;
-			Screen.Write(value.ToString());
+			Console.Write(value.ToString());
 		}
 
 		[Conditional("DEBUG")]
 		[Plug("System.Diagnostics.Debug::Write")]
 		public static void Write(string message, string category)
 		{
-			Screen.Write(message);
+			Console.Write(message);
 		}
 
 		[Conditional("DEBUG")]
@@ -43,16 +43,16 @@ namespace Mosa.Kernel.x86.Helpers
 		{
 			if (value == null)
 				return;
-			Screen.Write(value.ToString());
-			Screen.NextLine();
+			Console.Write(value.ToString());
+			Console.NextLine();
 		}
 
 		[Conditional("DEBUG")]
 		[Plug("System.Diagnostics.Debug::WriteLine")]
 		public static void WriteLine(string message, string category)
 		{
-			Screen.Write(message);
-			Screen.NextLine();
+			Console.Write(message);
+			Console.NextLine();
 		}
 
 		[Conditional("DEBUG")]
@@ -60,7 +60,7 @@ namespace Mosa.Kernel.x86.Helpers
 		public static void Print(string message)
 		{
 			Panic.Error("print");
-			Screen.Write(message);
+			Console.Write(message);
 		}
 	}
 }

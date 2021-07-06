@@ -4,7 +4,6 @@
 #define MyAppName "MOSA-Project"
 #define MyAppPublisher "MOSA-Project"
 #define MyAppURL "http://www.mosa-project.org"
-#define MyAppVersion "20210703"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application.
@@ -12,7 +11,7 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{516E4655-F79C-44AC-AA6D-D9A879450A64}
 AppName={#MyAppName}
-AppVersion={#MyAppVersion}
+AppVersion=0
 ;AppVerName={#MyAppName} {#MyAppVersion}
 AppPublisher={#MyAppPublisher}
 AppPublisherURL={#MyAppURL}
@@ -23,7 +22,7 @@ DisableDirPage=yes
 DisableReadyPage=yes
 DefaultGroupName={#MyAppName}
 OutputDir=..\..\bin
-OutputBaseFilename=MOSA-Installer-{#MyAppVersion}
+OutputBaseFilename=MOSA-Installer
 SolidCompression=yes
 MinVersion=0,6.0
 AllowUNCPath=False

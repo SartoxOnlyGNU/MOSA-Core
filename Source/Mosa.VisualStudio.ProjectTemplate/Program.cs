@@ -2,13 +2,13 @@
 
 using Mosa.Kernel.x86;
 
-namespace $safeprojectname$
+namespace MOSA1
 {
     public static class Program
     {
         public static void Setup()
         {
-            Screen.Write("Hello World!");
+            Console.Write("Hello World!");
         }
 
         public static void Loop()

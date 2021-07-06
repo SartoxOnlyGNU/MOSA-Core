@@ -8,11 +8,11 @@ namespace Mosa.Kernel.x86
 	/// <summary>
 	/// Screen
 	/// </summary>
-	public static class Screen
+	public static class Console
 	{
 		private static uint column = 0;
 		private static uint row = 0;
-		private static byte color = 23;
+		private static byte color = 0;
 
 		/// <summary>
 		/// The columns
@@ -184,10 +184,10 @@ namespace Mosa.Kernel.x86
 		/// </summary>
 		/// <param name="row">The row.</param>
 		/// <param name="col">The col.</param>
-		public static void Goto(uint row, uint col)
+		public static void SetCursorPosition(uint left, uint top)
 		{
-			Row = row;
-			Column = col;
+			Row = top;
+			Column = left;
 			UpdateCursor();
 		}
 
@@ -224,7 +224,7 @@ namespace Mosa.Kernel.x86
 				Write(' ');
 			}
 
-			Goto(r, c);
+			SetCursorPosition(c, r);
 		}
 
 		/// <summary>

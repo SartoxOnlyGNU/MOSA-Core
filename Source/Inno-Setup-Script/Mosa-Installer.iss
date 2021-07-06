@@ -39,7 +39,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Dirs]
 Name: "{app}\Tools"
-Name: "{app}\lib"
 
 [Files]
 Source: "..\..\*.txt"; DestDir: "{app}"; Flags: ignoreversion

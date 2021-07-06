@@ -22,7 +22,7 @@
         <ProjectItem ReplaceParameters="true" TargetFileName="Run.bat">Run.bat</ProjectItem>
       </Folder>
       <ProjectItem ReplaceParameters="true" TargetFileName="Boot.cs">Boot.cs</ProjectItem>
-      <ProjectItem ReplaceParameters="true" TargetFileName="Program.cs">Program.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PS2Keyboard.cs">Program.cs</ProjectItem>
       <ProjectItem ReplaceParameters="true" TargetFileName="README.txt">README.txt</ProjectItem>
     </Project>
   </TemplateContent>

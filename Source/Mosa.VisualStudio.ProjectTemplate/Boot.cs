@@ -16,17 +16,30 @@ namespace MOSA1
             Console.SetCursorPosition(0, 0);
             Console.Color = ConsoleColor.White;
 
-            Program.Setup();
+            PS2Keyboard.Initialize();
+
+            Console.WriteLine("MOSA Booted Successfully. Try To Type Anything !");
+
+            PS2Keyboard.KeyCode keyCode;
 
             while (true)
             {
-                Program.Loop();
+                if (PS2Keyboard.KeyAvailable) 
+                {
+                    keyCode = PS2Keyboard.GetKeyPressed();
+                    Console.Write(PS2Keyboard.KeyCodeToString(keyCode));
+                }
             }
         }
 
         public static void ProcessInterrupt(uint interrupt, uint errorCode)
         {
-            Program.OnInterrupt();
+            switch (interrupt) 
+            {
+                case 0x21:
+                    PS2Keyboard.OnInterrupt();
+                    break;
+            }
         }
     }
 }

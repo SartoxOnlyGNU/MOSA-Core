@@ -201,7 +201,12 @@ namespace Mosa.Launcher.Console
 
 			var args = $"start \"{Path.Combine(OutputFolder,"MOSA.vmx")}\"";
 
-			Process.Start(VMRunPath, args);
+
+			ProcessStartInfo processStartInfo = new ProcessStartInfo();
+			processStartInfo.UseShellExecute = true;
+			processStartInfo.Arguments = args;
+			processStartInfo.FileName = VMRunPath;
+			Process.Start(processStartInfo);
 		}
 
 		private static void NotifyEvent(CompilerEvent compilerEvent,string message,int threadID)

@@ -102,6 +102,13 @@ namespace Mosa.Kernel.x86
 		/// <param name="chr">The character.</param>
 		public static void Write(char chr)
 		{
+			if(Row == Rows)
+			{
+				Native.Memory_Copy(0x0B8000, 0x0B80A0, 0xF00);
+				Native.Memory_ZeroFill(0xB8F00, 0xA0);
+				SetCursorPosition(0, Rows - 1);
+			}
+
 			var address = new Pointer(0x0B8000 + ((Row * Columns + Column) * 2));
 
 			address.Store8((byte)chr);
@@ -127,7 +134,7 @@ namespace Mosa.Kernel.x86
 		/// <summary>
 		/// Goto the top.
 		/// </summary>
-		public static void GotoTop()
+		private static void GotoTop()
 		{
 			Column = 0;
 			Row = 0;

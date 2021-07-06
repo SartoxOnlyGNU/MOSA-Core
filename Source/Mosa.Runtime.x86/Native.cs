@@ -1251,5 +1251,21 @@ namespace Mosa.Runtime.x86
 		public extern static void IRQ255();
 
 		#endregion IRQs Intrinsic
+
+		public static void Memory_Copy(uint dest, uint source, uint size)
+		{
+			for (uint u = 0; u < size; u++)
+			{
+				Set8(dest + u, Get8(source + u));
+			}
+		}
+
+		public static void Memory_ZeroFill(uint dest, uint length)
+		{
+			for (uint u = 0; u < length; u++)
+			{
+				Set8(dest + u, 0);
+			}
+		}
 	}
 }

@@ -39,7 +39,10 @@ namespace Mosa.Kernel.x86
 			Console.BackgroundColor = ConsoleColor.Black;
 
 			Console.Clear();
-			Console.WriteLine("Kernel Panic !");
+			Console.SetCursorPosition(0, 0);
+
+			Console.Color = ConsoleColor.White;
+			Console.WriteLine("Kernel Panic!");
 
 			DumpStackTrace();
 
@@ -59,7 +62,6 @@ namespace Mosa.Kernel.x86
 			while (true)
 			{
 				var entry = Runtime.Internal.GetStackTraceEntry(depth, new Pointer(EBP), new Pointer(EIP));
-
 				if (!entry.Valid)
 					return;
 

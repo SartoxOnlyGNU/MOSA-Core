@@ -85,6 +85,7 @@ namespace Mosa.Launcher.Console
 			Arguments = new string[] { args[0], AppFolder + @"\output\main.exe", args[2] };
 
 			System.Console.WriteLine($"VBE Status: {VBEEnable}");
+			System.Console.WriteLine($"Output ISO Path:{ISOFilePath}");
 
 			DefaultSettings();
 			RegisterPlatforms();
@@ -103,7 +104,6 @@ namespace Mosa.Launcher.Console
 			Compile();
 
 			MakeISO();
-			System.Console.WriteLine($"Output ISO:{ISOFilePath}");
 
 			RunVMWareWorkstation();
 

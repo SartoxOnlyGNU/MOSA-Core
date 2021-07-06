@@ -102,8 +102,7 @@ namespace Mosa.Kernel.x86
 		{
 			Previous();
 			UpdateCursor();
-			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2), (byte)' ');
-			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2) + 1, color);
+			Clean();
 		}
 
 		/// <summary>
@@ -122,7 +121,7 @@ namespace Mosa.Kernel.x86
 		/// <param name="chr">The character.</param>
 		private static void Write(char chr)
 		{
-			if(CursorTop == Rows)
+			if (CursorTop == Rows)
 			{
 				Native.Memory_Copy(0x0B8000, 0x0B80A0, 0xF00);
 				Native.Memory_ZeroFill(0xB8F00, 0xA0);
@@ -135,6 +134,13 @@ namespace Mosa.Kernel.x86
 			Next();
 
 			UpdateCursor();
+			Clean();
+		}
+
+		private static void Clean()
+		{
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2), (byte)' ');
+			Native.Set8(0x0B8000 + ((CursorTop * Columns + CursorLeft) * 2) + 1, color);
 		}
 
 		/// <summary>
@@ -176,6 +182,7 @@ namespace Mosa.Kernel.x86
 			CursorLeft = 0;
 			CursorTop++;
 			UpdateCursor();
+			Clean();
 		}
 
 		/// <summary>

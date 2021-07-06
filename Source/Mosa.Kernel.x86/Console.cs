@@ -76,7 +76,7 @@ namespace Mosa.Kernel.x86
 
 		private static void Previous()
 		{
-			if (Column > 0 && Row >= 0)
+			if (Column >= 0 && Row >= 0)
 			{
 				if(Column == 0)
 				{

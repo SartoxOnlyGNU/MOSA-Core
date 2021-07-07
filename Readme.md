@@ -2,7 +2,7 @@
 #### One of my MOSA demos(https://github.com/nifanfa/MOSA-GUI-Sample)
 ![Overview](https://github.com/nifanfa/MOSA-GUI-Sample/blob/master/QQ%E6%88%AA%E5%9B%BE20210704183152.png)
 
-# In MOSA. Before use a class. Call setup first if there is.
+# In MOSA. Before use a class. Call setup or Initialize first if there is.
 
 [![Build status][build-status-image]][build-status]  [![Test status][test-status-image]][test-status]  [![License][github-license]][github-license-link]  [![Issues][github-issues]][github-issues-link]  [![Stars][github-stars]][github-stars-link]  [![Forks][github-forks]][github-forks-link]  
 

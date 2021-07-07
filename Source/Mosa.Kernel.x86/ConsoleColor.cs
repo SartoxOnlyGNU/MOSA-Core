@@ -5,6 +5,7 @@ namespace Mosa.Kernel.x86
 	public static class ConsoleColor
 	{
 		public static readonly byte Black = 0x00;
+		/*
 		public static readonly byte Blue = 0x01;
 		public static readonly byte Green = 0x02;
 		public static readonly byte Cyan = 0x03;
@@ -20,6 +21,7 @@ namespace Mosa.Kernel.x86
 		public static readonly byte LightRed = 0x0C;
 		public static readonly byte LightMagenta = 0x0D;
 		public static readonly byte Yellow = 0x0E;
+		*/
 		public static readonly byte White = 0x0F;
 	}
 }

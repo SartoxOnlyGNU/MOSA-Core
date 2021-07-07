@@ -1,6 +1,5 @@
 ﻿// Copyright (c) MOSA Project. Licensed under the New BSD License.
 
-using Mosa.Runtime;
 using Mosa.Runtime.x86;
 
 namespace Mosa.Kernel.x86
@@ -74,18 +73,20 @@ namespace Mosa.Kernel.x86
 			}
 		}
 
+		private static bool b;
+
 		private static void Previous()
 		{
 			if (CursorLeft >= 0 && CursorTop >= 0)
 			{
-				if(CursorLeft == 0 && CursorTop == 0)
+				if (CursorLeft == 0 && CursorTop == 0)
 				{
 					return;
 				}
 
-				if(CursorLeft == 0)
+				if (CursorLeft == 0)
 				{
-					if(CursorTop != 0)
+					if (CursorTop != 0)
 					{
 						CursorTop--;
 					}
@@ -93,6 +94,18 @@ namespace Mosa.Kernel.x86
 				}
 				else
 				{
+					b = Native.Get8(0x0B8000 + ((CursorTop * Columns + (CursorLeft - 1)) * 2)) == ' ' && CursorLeft != 0;
+
+					while (Native.Get8(0x0B8000 + ((CursorTop * Columns + (CursorLeft - 1)) * 2)) == ' ' && CursorLeft != 0) 
+					{
+						CursorLeft--;
+					}
+
+					if (b)
+					{
+						CursorLeft++;
+					}
+
 					CursorLeft--;
 				}
 			}

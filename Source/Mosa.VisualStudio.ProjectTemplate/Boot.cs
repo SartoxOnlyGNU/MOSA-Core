@@ -19,7 +19,7 @@ namespace $safeprojectname$
 
             PS2Keyboard.Initialize();
 
-            Console.WriteLine("MOSA Booted Successfully. Try To Type Anything !");
+            Console.WriteLine("MOSA Booted Successfully. Type Anything You Want!");
 
             PS2Keyboard.KeyCode keyCode;
 

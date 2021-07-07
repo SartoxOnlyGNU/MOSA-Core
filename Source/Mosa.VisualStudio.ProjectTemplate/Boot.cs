@@ -6,6 +6,8 @@ namespace $safeprojectname$
 {
     public static class Boot
     {
+        public static string Input = "";
+
         public static void Main()
         {
             Mosa.Kernel.x86.Kernel.Setup();
@@ -19,32 +21,39 @@ namespace $safeprojectname$
 
             PS2Keyboard.Initialize();
 
-            Console.WriteLine("MOSA Booted Successfully. Type Anything You Want!");
+            Console.WriteLine("MOSA Booted Successfully. Type Anything You Want And Get Echo Back!");
 
             PS2Keyboard.KeyCode keyCode;
 
             while (true)
             {
-                if (PS2Keyboard.KeyAvailable) 
+                if (PS2Keyboard.KeyAvailable)
                 {
                     keyCode = PS2Keyboard.GetKeyPressed();
-                    switch (keyCode) 
+                    switch (keyCode)
                     {
                         case PS2Keyboard.KeyCode.Delete:
                             Console.RemovePreviousOne();
+                            Input = Input.Substring(0, Input.Length - 1);
                             break;
                         case PS2Keyboard.KeyCode.Enter:
                             Console.WriteLine();
+                            Console.WriteLine("Input:" + Input);
+                            Input = "";
                             break;
 
                         default:
                             if (PS2Keyboard.IsCapsLock)
                             {
                                 Console.Write(PS2Keyboard.KeyCodeToString(keyCode));
+
+                                Input += PS2Keyboard.KeyCodeToString(keyCode);
                             }
                             else
                             {
                                 Console.Write(PS2Keyboard.KeyCodeToString(keyCode).ToLower());
+
+                                Input += PS2Keyboard.KeyCodeToString(keyCode).ToLower();
                             }
                             break;
                     }
@@ -54,7 +63,7 @@ namespace $safeprojectname$
 
         public static void ProcessInterrupt(uint interrupt, uint errorCode)
         {
-            switch (interrupt) 
+            switch (interrupt)
             {
                 case 0x21:
                     PS2Keyboard.OnInterrupt();

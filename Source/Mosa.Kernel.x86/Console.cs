@@ -73,8 +73,6 @@ namespace Mosa.Kernel.x86
 			}
 		}
 
-		private static uint seekTimes;
-
 		private static void Previous()
 		{
 			if (CursorLeft >= 0 && CursorTop >= 0)
@@ -87,19 +85,6 @@ namespace Mosa.Kernel.x86
 
 				if (CursorLeft != 0)
 				{
-					seekTimes = 0;
-
-					while (Native.Get8(0x0B8000 + ((CursorTop * Columns + (CursorLeft - 1)) * 2)) == ' ' && CursorLeft != 0) 
-					{
-						CursorLeft--;
-						seekTimes++;
-					}
-
-					if (seekTimes > 0)
-					{
-						CursorLeft++;
-					}
-
 					CursorLeft--;
 				}
 			}

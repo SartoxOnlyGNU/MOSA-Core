@@ -55,7 +55,7 @@ namespace Mosa.Kernel.x86
 		/// </summary>
 		public static bool IsVBEAvailable => Multiboot.IsMultibootAvailable && !VBEModeInfo.IsNull;
 
-		private static Pointer VBEModeInfo => Multiboot.VBEModeInfo;
+		public static Pointer VBEModeInfo => Multiboot.VBEModeInfo;
 
 		/// <summary>
 		/// Setup VBE.

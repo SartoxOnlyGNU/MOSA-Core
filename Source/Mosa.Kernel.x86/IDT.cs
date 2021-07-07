@@ -2235,15 +2235,6 @@ namespace Mosa.Kernel.x86
 					Error(stack, "SIMD Floating-Point Exception");
 					break;
 
-				case Scheduler.ClockIRQ:
-					Interrupt?.Invoke(stack->Interrupt, stack->ErrorCode);
-					Scheduler.ClockInterrupt(new Pointer(stackStatePointer));
-					break;
-
-				case Scheduler.ThreadTerminationSignalIRQ:
-					Scheduler.TerminateCurrentThread();
-					break;
-
 				default:
 					{
 						Interrupt?.Invoke(stack->Interrupt, stack->ErrorCode);

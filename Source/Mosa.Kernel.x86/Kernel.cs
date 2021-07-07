@@ -31,8 +31,6 @@ namespace Mosa.Kernel.x86
 			VirtualPageAllocator.Setup();
 			GC.Setup();
 
-			// At this point we can use objects
-			Scheduler.Setup();
 			SmbiosManager.Setup();
 		}
 	}

@@ -22,8 +22,8 @@ namespace Mosa.Kernel.x86
 		private const byte ICW4_BufferedMasterMode = 0x0C;
 		private const byte ICW4_SpecialFullyNested = 0x10;
 
-		private const byte PIC1_Command = 0x20;
-		private const byte PIC2_Command = 0xA0;
+		public const byte PIC1_Command = 0x20;
+		public const byte PIC2_Command = 0xA0;
 		private const byte PIC1_Data = 0x21;
 		private const byte PIC2_Data = 0xA1;
 

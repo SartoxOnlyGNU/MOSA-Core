@@ -36,7 +36,7 @@
         }
         public abstract void DrawPoint(uint Color, int X, int Y);
         public abstract void Update();
-        public void Clear(uint Color)
+        public virtual void Clear(uint Color)
 		{
 			DrawFilledRectangle(Color, 0, 0, Width, Height);
 		}

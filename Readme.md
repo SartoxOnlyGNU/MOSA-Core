@@ -10,7 +10,7 @@
 
 # In MOSA. Before use a class. Call setup or Initialize first if there is.
 
-This a branch of MOSA-Project. A Stable and Powerful way to make an x86 operating system in C#
+This a branch of MOSA-Project. A Stable and Powerful way to make a x86 operating system in C#
 
 ### License
 

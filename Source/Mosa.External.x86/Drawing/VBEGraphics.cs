@@ -23,11 +23,6 @@ namespace Mosa.External.x86.Drawing
 			ResetLimit();
         }
 
-        public override void Clear(uint Color)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Disable()
         {
             //throw new NotImplementedException();

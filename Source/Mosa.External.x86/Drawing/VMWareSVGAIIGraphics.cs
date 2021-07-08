@@ -37,11 +37,6 @@ namespace Mosa.External.x86.Drawing
             vMWareSVGAII.Update();
         }
 
-        public override void Clear(uint Color)
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Disable()
         {
             vMWareSVGAII.Disable();

@@ -19,5 +19,6 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Mosa.Kernel.x86\Mosa.Kernel.x86.csproj" />
 	  <ProjectReference Include="..\Mosa.Korlib\Mosa.Korlib.csproj" />
+	  <ProjectReference Include="..\Mosa.Runtime\Mosa.Runtime.csproj" />
 	</ItemGroup>
 </Project>

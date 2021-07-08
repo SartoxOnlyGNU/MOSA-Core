@@ -18,9 +18,16 @@ namespace Mosa.External.x86
             return new MemoryBlock(address, size);
         }
 
-		public static uint GetAvailableMemory()
+		public unsafe static uint GetAvailableMemory()
 		{
-			return (PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize;
+			uint FREESIZE = 0;
+
+			for (uint u = 0; u < GC.FREE_DESCRIPTORS_SIZE; u += (2 * sizeof(uint)))
+			{
+				FREESIZE += ((GC.MEM_FREE_DESCRIPTOR*)(GC.FREE_DESCRIPTORS_ADDR + u))->SIZE;
+			}
+
+			return ((PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize) + FREESIZE;
 		}
 	}
 

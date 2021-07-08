@@ -7,7 +7,7 @@ namespace Mosa.Runtime
 {
 	public unsafe static class GC
 	{
-		struct MEM_FREE_DESCRIPTOR
+		public struct MEM_FREE_DESCRIPTOR
 		{
 			public uint ADDR;
 			public uint SIZE;

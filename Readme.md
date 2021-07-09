@@ -1,5 +1,5 @@
 # How to build?
-## Inno-Setup Required
+## Inno-Setup Required [Download Here](https://jrsoftware.org/isinfo.php)
 ## Build the MOSA.sln and then double-click CreateInstaller.bat
 
 # A different branch from mosa/MOSA-Project

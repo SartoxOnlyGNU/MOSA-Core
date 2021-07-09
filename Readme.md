@@ -1,3 +1,7 @@
+# How to build?
+## Inno-Setup Required [Download Here](https://jrsoftware.org/download.php/is.exe)
+## Build the MOSA.sln and then double-click CreateInstaller.bat
+
 # A different branch from mosa/MOSA-Project
 
 [![Gitter Chat][gitter-image]][gitter-chat]
@@ -10,7 +14,8 @@
 
 # In MOSA. Before use a class. Call setup or Initialize first if there is.
 
-This a branch of MOSA-Project. A Stable and Powerful way to make a x86 operating system in C#
+This a branch of MOSA-Project. A Stable and Powerful way to make a x86 operating system in C#  
+If you want to develop a X64 or ARMV8A32 operating system please check [mosa/MOSA-Project](https://github.com/mosa/MOSA-Project) out (both X64 and ARMV8A32 are experimental so they're not in MOSA-Core)
 
 ### License
 

@@ -7,7 +7,7 @@ namespace Mosa.Runtime
 {
 	public unsafe static class GC
 	{
-		public struct MEM_FREE_DESCRIPTOR
+		private struct MEM_FREE_DESCRIPTOR
 		{
 			public uint ADDR;
 			public uint SIZE;
@@ -27,13 +27,13 @@ namespace Mosa.Runtime
 			{
 				for (uint u = 0; u < FREE_DESCRIPTORS_SIZE; u += (2 * sizeof(uint)))
 				{
-					if (((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE == size)
+					if (((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE >= size)
 					{
 						Pointer RESULT = new Pointer(((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->ADDR);
 
 						//Clear
-						((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE = 0;
-						((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->ADDR = 0;
+						((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE -= size;
+						((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->ADDR += size;
 
 						return RESULT;
 					}
@@ -43,10 +43,10 @@ namespace Mosa.Runtime
 			return AllocateMemory(size);
 		}
 
-		public static uint FREE_DESCRIPTORS_ADDR;
-		public static uint FREE_DESCRIPTORS_SIZE;
-		public const uint FREE_DESCRIPTORS_NUMBER = 4096;
-		static bool READY = false;
+		private static uint FREE_DESCRIPTORS_ADDR;
+		private static uint FREE_DESCRIPTORS_SIZE;
+		private const uint FREE_DESCRIPTORS_NUMBER = 4096;
+		private static bool READY = false;
 
 		public static void Setup()
 		{
@@ -72,10 +72,14 @@ namespace Mosa.Runtime
 			uint _ADDR = (uint)Intrinsic.GetObjectAddress(obj);
 			//                   ///                      Size Of Object Data                ///Size Of  TypeDef And SyncBlock///              
 			uint _SIZE = (uint)((*((uint*)(obj.GetType().TypeHandle.Value + (Pointer.Size * 3)))) + 2 * sizeof(Pointer));
+			Free(_ADDR, _SIZE);
+		}
 
+		public static void Free(uint _ADDR, uint _SIZE)
+		{
 			for (uint u = 0; u < FREE_DESCRIPTORS_SIZE; u += (2 * sizeof(uint)))
 			{
-				if(((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE == 0)
+				if (((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE == 0)
 				{
 					((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->ADDR = _ADDR;
 					((MEM_FREE_DESCRIPTOR*)(FREE_DESCRIPTORS_ADDR + u))->SIZE = _SIZE;

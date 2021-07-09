@@ -87,5 +87,17 @@ namespace Mosa.Runtime
 				}
 			}
 		}
+
+		public static uint GCFreeMemory()
+		{
+			uint FREESIZE = 0;
+
+			for (uint u = 0; u < GC.FREE_DESCRIPTORS_SIZE; u += (2 * sizeof(uint)))
+			{
+				FREESIZE += ((GC.MEM_FREE_DESCRIPTOR*)(GC.FREE_DESCRIPTORS_ADDR + u))->SIZE;
+			}
+
+			return FREESIZE;
+		}
 	}
 }

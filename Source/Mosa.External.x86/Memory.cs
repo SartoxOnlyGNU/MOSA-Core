@@ -20,14 +20,7 @@ namespace Mosa.External.x86
 
 		public unsafe static uint GetAvailableMemory()
 		{
-			uint FREESIZE = 0;
-
-			for (uint u = 0; u < GC.FREE_DESCRIPTORS_SIZE; u += (2 * sizeof(uint)))
-			{
-				FREESIZE += ((GC.MEM_FREE_DESCRIPTOR*)(GC.FREE_DESCRIPTORS_ADDR + u))->SIZE;
-			}
-
-			return ((PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize) + FREESIZE;
+			return ((PageFrameAllocator.TotalPages - PageFrameAllocator.TotalPagesInUse) * PageFrameAllocator.PageSize) + GC.GCFreeMemory();
 		}
 	}
 

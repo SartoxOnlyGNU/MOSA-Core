@@ -1,3 +1,5 @@
+## Build the MOSA.sln and then install Inno-Setup and double-click CreateInstaller.bat
+
 # A different branch from mosa/MOSA-Project
 
 [![Gitter Chat][gitter-image]][gitter-chat]

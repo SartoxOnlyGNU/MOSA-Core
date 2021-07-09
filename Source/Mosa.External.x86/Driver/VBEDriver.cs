@@ -4,7 +4,7 @@ using Mosa.Runtime;
 
 namespace Mosa.External.x86.Driver
 {
-    class VBEDriver
+    public class VBEDriver
     {
 		public MemoryBlock Video_Memory;
 		public uint ScreenWidth

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Compile and Run": {
+      "commandName": "Executable",
+      "executablePath": "cmd",
+      "commandLineArgs": "/c start \"\" ..\\Properties\\Run.bat $safeprojectname$.exe",
+      "workingDirectory": "bin"
+    }
+  }
+}

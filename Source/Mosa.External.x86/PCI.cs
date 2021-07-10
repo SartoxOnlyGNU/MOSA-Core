@@ -33,58 +33,6 @@ using System.Collections.Generic;
 
 namespace Mosa.External.x86
 {
-    public enum ClassID
-    {
-        PCIDevice_2_0 = 0x00,
-        MassStorageController = 0x01,
-        NetworkController = 0x02,
-        DisplayController = 0x03,
-        MultimediaDevice = 0x04,
-        MemoryController = 0x05,
-        BridgeDevice = 0x06,
-        SimpleCommController = 0x07,
-        BaseSystemPreiph = 0x08,
-        InputDevice = 0x09,
-        DockingStations = 0x0A,
-        Proccesors = 0x0B,
-        SerialBusController = 0x0C,
-        WirelessController = 0x0D,
-        InteligentController = 0x0E,
-        SateliteCommController = 0x0F,
-        EncryptionController = 0x10,
-        SignalProcessingController = 0x11,
-        ProcessingAccelerators = 0x12,
-        NonEssentialInstsrumentation = 0x13,
-        Coprocessor = 0x40,
-        Unclassified = 0xFF
-    }
-
-    public enum SubclassID
-    {
-        // MassStorageController: 
-        SCSIStorageController = 0x00,
-        IDEInterface = 0x01,
-        FloppyDiskController = 0x02,
-        IPIBusController = 0x03,
-        RAIDController = 0x04,
-        ATAController = 0x05,
-        SATAController = 0x06,
-        SASController = 0x07,
-        NVMController = 0x08,
-        UnknownMassStorage = 0x09,
-    }
-
-    public enum ProgramIF
-    {
-        // MassStorageController:
-        SATA_VendorSpecific = 0x00,
-        SATA_AHCI = 0x01,
-        SATA_SerialStorageBus = 0x02,
-        SAS_SerialStorageBus = 0x01,
-        NVM_NVMHCI = 0x01,
-        NVM_NVMExpress = 0x02
-    }
-
     public enum VendorID
     {
         Intel = 0x8086,
@@ -162,11 +110,6 @@ namespace Mosa.External.x86
                 CheckBus(xPCIDevice.SecondaryBusNumber);
         }
 
-        public static bool Exists(PCIDevice pciDevice)
-        {
-            return GetDevice((VendorID)pciDevice.VendorID, (DeviceID)pciDevice.DeviceID) != null;
-        }
-
         public static bool Exists(VendorID aVendorID, DeviceID aDeviceID)
         {
             return GetDevice(aVendorID, aDeviceID) != null;
@@ -184,54 +127,6 @@ namespace Mosa.External.x86
             {
                 if ((VendorID)xDevice.VendorID == aVendorID &&
                     (DeviceID)xDevice.DeviceID == aDeviceID)
-                {
-                    return xDevice;
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// Get device.
-        /// </summary>
-        /// <param name="bus">Bus ID.</param>
-        /// <param name="slot">Slot position ID.</param>
-        /// <param name="function">Function ID.</param>
-        /// <returns></returns>
-        public static PCIDevice GetDevice(uint bus, uint slot, uint function)
-        {
-            foreach (var xDevice in Devices)
-            {
-                if (xDevice.bus == bus &&
-                    xDevice.slot == slot &&
-                    xDevice.function == function)
-                {
-                    return xDevice;
-                }
-            }
-            return null;
-        }
-
-        public static PCIDevice GetDeviceClass(ClassID Class, SubclassID SubClass)
-        {
-            foreach (var xDevice in Devices)
-            {
-                if ((ClassID)xDevice.ClassCode == Class &&
-                    (SubclassID)xDevice.Subclass == SubClass)
-                {
-                    return xDevice;
-                }
-            }
-            return null;
-        }
-
-        public static PCIDevice GetDeviceClass(ClassID aClass, SubclassID aSubClass, ProgramIF aProgIF)
-        {
-            foreach (var xDevice in Devices)
-            {
-                if ((ClassID)xDevice.ClassCode == aClass &&
-                    (SubclassID)xDevice.Subclass == aSubClass &&
-                    (ProgramIF)xDevice.ProgIF == aProgIF)
                 {
                     return xDevice;
                 }

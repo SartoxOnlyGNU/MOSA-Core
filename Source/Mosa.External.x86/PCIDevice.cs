@@ -340,10 +340,5 @@ namespace Mosa.External.x86
         {
             get { return baseAddress; }
         }
-
-        public bool IsIO
-        {
-            get { return isIO; }
-        }
     }
 }

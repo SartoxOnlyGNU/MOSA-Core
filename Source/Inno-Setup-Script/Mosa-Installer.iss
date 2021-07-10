@@ -45,18 +45,11 @@ Source: "..\..\*.md"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\..\*.bat"; DestDir: "{app}"; Flags: ignoreversion
 
 ;Visual Studio Extension
-Source: "..\Mosa.VisualStudio.ProjectTemplate\Boot.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\MOSA.csproj"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\MyTemplate.vstemplate"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\PS2Keyboard.cs"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\README.txt"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\__TemplateIcon.ico"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\launchSettings.json"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion
-Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\Run.bat"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion
-
+Source: "..\Mosa.VisualStudio.ProjectTemplate\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion 
+Source: "..\Mosa.VisualStudio.GUI.ProjectTemplate\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project GUI"; Flags: ignoreversion 
    
-Source: "..\..\bin\*.*"; DestDir: "{app}\bin"; Flags: ignoreversion
-
+;Binaries
+Source: "..\..\bin\*.*"; DestDir: "{app}\bin"; Flags: ignoreversion 
 
 ;Tools
 Source: "..\..\Tools\nasm\*.*"; DestDir: "{app}\Tools\nasm"; Flags: ignoreversion

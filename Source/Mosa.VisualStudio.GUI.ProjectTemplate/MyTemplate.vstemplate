@@ -1,0 +1,31 @@
+<VSTemplate Version="3.0.0" xmlns="http://schemas.microsoft.com/developer/vstemplate/2005" Type="Project">
+  <TemplateData>
+    <Name>MOSA GUI</Name>
+    <Description>Use MOSA(nifanfa) to create an operating system with GUI</Description>
+    <ProjectType>CSharp</ProjectType>
+    <ProjectSubType>
+    </ProjectSubType>
+    <SortOrder>1000</SortOrder>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>MOSA</DefaultName>
+    <ProvideDefaultName>true</ProvideDefaultName>
+    <LocationField>Enabled</LocationField>
+    <EnableLocationBrowseButton>true</EnableLocationBrowseButton>
+    <CreateInPlace>true</CreateInPlace>
+    <Icon>__TemplateIcon.ico</Icon>
+  </TemplateData>
+  <TemplateContent>
+    <Project TargetFileName="$safeprojectname$.csproj" File="MOSA.csproj" ReplaceParameters="true" >
+      <Folder Name=".vs" TargetFolderName=".vs" />
+      <Folder Name="Properties" TargetFolderName="Properties">
+        <ProjectItem ReplaceParameters="true" TargetFileName="launchSettings.json">launchSettings.json</ProjectItem>
+        <ProjectItem ReplaceParameters="true" TargetFileName="Run.bat">Run.bat</ProjectItem>
+      </Folder>
+      <ProjectItem ReplaceParameters="true" TargetFileName="Boot.cs">Boot.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PS2Keyboard.cs">PS2Keyboard.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="PS2Mouse.cs">PS2Mouse.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="FPSMeter.cs">FPSMeter.cs</ProjectItem>
+      <ProjectItem ReplaceParameters="true" TargetFileName="README.txt">README.txt</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

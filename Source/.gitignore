@@ -1,8 +1,0 @@
-*.dll
-*.exe
-*.resources
-*.psess
-*.vspx
-*.CodeAnalysisLog.xml
-*.lastcodeanalysissucceeded
-/TestResults

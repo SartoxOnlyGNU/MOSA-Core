@@ -25,8 +25,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 		/// <summary>
 		/// The BitFont Should Be Left Aligned
 		/// </summary>
-		/// <param name="Name"></param>
-		/// <param name="bitFontDescriptor"></param>
 		public static void RegisterBitFont(BitFontDescriptor bitFontDescriptor)
 		{
 			//Static Is Not Available In MOSA
@@ -41,14 +39,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 		/// <summary>
 		/// Draw String With BitFont
 		/// </summary>
-		/// <exception cref="KeyNotFoundException"></exception>
-		/// <param name="canvas"></param>
-		/// <param name="FontName"></param>
-		/// <param name="color"></param>
-		/// <param name="Text"></param>
-		/// <param name="X"></param>
-		/// <param name="Y"></param>
-		/// <param name="Devide"></param>
 		public static void DrawBitFontString(this Graphics graphics, string FontName, uint color, string Text, int X, int Y, int Devide = 0, bool DisableAntiAliasing = false)
 		{
 			BitFontDescriptor bitFontDescriptor = new BitFontDescriptor();
@@ -72,14 +62,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 		/// <summary>
 		/// Return Font Used Width
 		/// </summary>
-		/// <param name="canvas"></param>
-		/// <param name="MemoryStream"></param>
-		/// <param name="Size"></param>
-		/// <param name="Color"></param>
-		/// <param name="Index"></param>
-		/// <param name="X"></param>
-		/// <param name="Y"></param>
-		/// <returns></returns>
 		private static int DrawBitFontChar(Graphics graphics, byte[] Raw, int Size, Color Color, int Index, int X, int Y, bool UseAntiAliasing)
 		{
 			if (Index == -1) return Size / 2;

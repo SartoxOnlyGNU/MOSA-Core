@@ -49,7 +49,7 @@ namespace Mosa.External.x86.Drawing.Fonts
 		/// <param name="X"></param>
 		/// <param name="Y"></param>
 		/// <param name="Devide"></param>
-		public static void DrawBitFontString(this Graphics graphics, string FontName, Color color, string Text, int X, int Y, int Devide = 2, bool DisableAntiAliasing = false)
+		public static void DrawBitFontString(this Graphics graphics, string FontName, uint color, string Text, int X, int Y, int Devide = 2, bool DisableAntiAliasing = false)
 		{
 			BitFontDescriptor bitFontDescriptor = new BitFontDescriptor();
 			foreach (var v in RegisteredBitFont)
@@ -64,7 +64,7 @@ namespace Mosa.External.x86.Drawing.Fonts
 			for (int i = 0; i < Text.Length; i++)
 			{
 				char c = Text[i];
-				UsedX += DrawBitFontChar(graphics, bitFontDescriptor.Raw, bitFontDescriptor.Size, color, bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y, !DisableAntiAliasing) + Devide;
+				UsedX += DrawBitFontChar(graphics, bitFontDescriptor.Raw, bitFontDescriptor.Size, Color.FromArgb((int)color), bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y, !DisableAntiAliasing) + Devide;
 			}
 		}
 
@@ -115,7 +115,7 @@ namespace Mosa.External.x86.Drawing.Fonts
 							{
 								if (UseAntiAliasing)
 								{
-									graphics.DrawPoint((uint)Color.FromArgb(Color.R / 2, Color.G / 2, Color.B / 2).ToArgb(), X + (aw * 8) + ww - 1, Y + h);
+									graphics.DrawPoint((uint)Color.FromArgb((byte)(Color.R / 2), (byte)(Color.G / 2), (byte)(Color.B / 2)).ToArgb(), X + (aw * 8) + ww - 1, Y + h);
 								}
 
 								LastPixelIsNotDrawn = false;

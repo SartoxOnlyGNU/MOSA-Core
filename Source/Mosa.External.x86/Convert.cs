@@ -1,7 +1,7 @@
 ﻿using Mosa.Runtime;
 using Mosa.Runtime.Plug;
 
-namespace MOSA1
+namespace Mosa.External.x86
 {
     public static class Convert 
     {

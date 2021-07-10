@@ -27,7 +27,16 @@ namespace Mosa.External.x86.Drawing
             }
         }
 
-        public unsafe override void Update()
+		public override uint GetPoint(int X, int Y)
+		{
+			if (X >= LimitX && X <= LimitX + LimitWidth && Y > LimitY && Y < LimitY + LimitHeight)
+			{
+				return vMWareSVGAII.Video_Memory.Read32((uint)(FrameSize + ((Width * Y + X) * Bpp)));
+			}
+			return 0;
+		}
+
+		public unsafe override void Update()
         {
             uint addr = vMWareSVGAII.Video_Memory.Address.ToUInt32();
             for (int i = 0; i < FrameSize; i++)

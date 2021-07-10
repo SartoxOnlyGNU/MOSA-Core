@@ -115,7 +115,13 @@ namespace Mosa.External.x86.Drawing.Fonts
 							{
 								if (UseAntiAliasing)
 								{
-									graphics.DrawPoint((uint)Color.FromArgb((byte)(Color.R / 2), (byte)(Color.G / 2), (byte)(Color.B / 2)).ToArgb(), X + (aw * 8) + ww - 1, Y + h);
+									int tx = X + (aw * 8) + ww - 1;
+									int ty = Y + h;
+									Color ac = Mosa.External.x86.Drawing.Color.FromArgb((int)graphics.GetPoint(tx, ty));
+									ac.R = (byte)(((Color.R * 127 + 127 * ac.R) >> 8) & 0xFF);
+									ac.G = (byte)(((Color.R * 127 + 127 * ac.G) >> 8) & 0xFF);
+									ac.B = (byte)(((Color.R * 127 + 127 * ac.B) >> 8) & 0xFF);
+									graphics.DrawPoint((uint)ac.ToArgb(),tx , ty);
 								}
 
 								LastPixelIsNotDrawn = false;

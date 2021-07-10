@@ -36,7 +36,16 @@ namespace Mosa.External.x86.Drawing
             }
         }
 
-        public override void Update()
+		public override uint GetPoint(int X, int Y)
+		{
+			if (X >= LimitX && X <= LimitX + LimitWidth && Y > LimitY && Y < LimitY + LimitHeight)
+			{
+				return memoryBlock.Read32((uint)(((Width * Y + X) * Bpp)));
+			}
+			return 0;
+		}
+
+		public override void Update()
         {
             uint addr = vBEDriver.Video_Memory.Address.ToUInt32();
             uint bufferaddr = memoryBlock.Address.ToUInt32();

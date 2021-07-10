@@ -1,4 +1,6 @@
-﻿namespace Mosa.External.x86.Drawing
+﻿using System;
+
+namespace Mosa.External.x86.Drawing
 {
 	public struct Color
 	{

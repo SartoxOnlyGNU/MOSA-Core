@@ -35,6 +35,7 @@
             DrawFilledRectangle(Color, X, Y + (Height - Weight), Width, Weight);
         }
         public abstract void DrawPoint(uint Color, int X, int Y);
+        public abstract uint GetPoint(int X, int Y);
         public abstract void Update();
         public virtual void Clear(uint Color)
 		{

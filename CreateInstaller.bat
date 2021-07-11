@@ -1,6 +1,6 @@
 @echo off
-echo Removing previous installer
-del bin\MOSA-Installer.exe
+echo Removing Previous Installer...
+del bin\MOSA-Installer.exe /q
 cd Source\Inno-Setup-Script
 create-installer.bat
 pause

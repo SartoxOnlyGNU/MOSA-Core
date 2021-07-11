@@ -183,7 +183,11 @@ namespace Mosa.Launcher.Console
 			}
 
 			var args = $"-relaxed-filenames -J -R -o \"{ISOFilePath}\" -b isolinux.bin -no-emul-boot -boot-load-size 4 -boot-info-table \"{OutputFolder}\"";
-			Process.Start(AppFolder + @"\Tools\mkisofs\mkisofs.exe", args);
+			Process process = Process.Start(AppFolder + @"\Tools\mkisofs\mkisofs.exe", args);
+            
+			while (!process.HasExited) 
+			{
+			}
 		}
 
 		private static void RunVMWareWorkstation()

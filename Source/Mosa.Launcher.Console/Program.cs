@@ -162,9 +162,12 @@ namespace Mosa.Launcher.Console
 
 				GC.Collect();
 			}
-			catch (Exception)
+			catch (Exception E)
 			{
 				System.Console.WriteLine("Exception Thrown While Compiling");
+				System.Console.WriteLine(E.Message);
+				System.Console.WriteLine(E.StackTrace);
+				System.Console.WriteLine("Please Report This Problem");
 				System.Console.WriteLine("Press Any Key To Continue...");
 				System.Console.ReadKey();
 				Environment.Exit(0);

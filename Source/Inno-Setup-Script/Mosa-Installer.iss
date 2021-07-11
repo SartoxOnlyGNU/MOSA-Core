@@ -46,7 +46,10 @@ Name: "{app}\Tools"
 
 ;Visual Studio Extension
 Source: "..\Mosa.VisualStudio.ProjectTemplate\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion 
+Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion 
+
 Source: "..\Mosa.VisualStudio.GUI.ProjectTemplate\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project GUI"; Flags: ignoreversion 
+Source: "..\Mosa.VisualStudio.GUI.ProjectTemplate\Properties\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project GUI\Properties"; Flags: ignoreversion 
    
 ;Binaries
 Source: "..\..\bin\*.*"; DestDir: "{app}\bin"; Flags: ignoreversion 

@@ -40,10 +40,6 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "{app}\Tools"
 
 [Files]
-;Source: "..\..\*.txt"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "..\..\*.md"; DestDir: "{app}"; Flags: ignoreversion
-;Source: "..\..\*.bat"; DestDir: "{app}"; Flags: ignoreversion
-
 ;Visual Studio Extension
 Source: "..\Mosa.VisualStudio.ProjectTemplate\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project"; Flags: ignoreversion 
 Source: "..\Mosa.VisualStudio.ProjectTemplate\Properties\*.*"; DestDir: "{userdocs}\Visual Studio 2019\Templates\ProjectTemplates\Mosa Project\Properties"; Flags: ignoreversion 

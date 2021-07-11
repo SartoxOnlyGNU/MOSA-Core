@@ -1,8 +1,8 @@
+# Note: Your project name cannot contain spaces
 # How to build?
 ## Inno-Setup Required [Download Here](https://jrsoftware.org/download.php/is.exe)
 ## Build the MOSA.sln and then double-click CreateInstaller.bat
 
-# Note: Your project name cannot contain spaces
 [![Gitter Chat][gitter-image]][gitter-chat]
 
 [gitter-image]: https://img.shields.io/badge/gitter-join%20chat%20-blue.svg

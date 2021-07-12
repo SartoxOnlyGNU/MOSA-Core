@@ -37,11 +37,6 @@ namespace Mosa.External.x86.FileSystem
             this.fileSectorOffset = fileSectorOffset;
 
             ReadFileList(fileListSector0ffset);
-
-            foreach(var v in FileInfos) 
-            {
-                PrintFileInfo(v);
-            }
         }
 
         public byte[] ReadAllBytes(string Name) 

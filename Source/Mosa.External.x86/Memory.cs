@@ -39,6 +39,23 @@ namespace Mosa.External.x86
 			this.size = size;
 		}
 
+        public MemoryBlock(uint size)
+        {
+			this.address = GC.AllocateObject(size);
+			this.size = size;
+        }
+
+        public MemoryBlock(byte[] data)
+        {
+			this.address = GC.AllocateObject((uint)data.Length);
+			this.size = (uint)data.Length;
+
+			for(int i = 0; i < data.Length; i++) 
+			{
+				Write8((uint)i, data[i]);
+			}
+		}
+
 		public byte this[uint offset]
 		{
 			get { return address.Load8(offset); }

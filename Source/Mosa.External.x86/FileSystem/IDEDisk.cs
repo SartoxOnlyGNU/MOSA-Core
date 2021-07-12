@@ -3,7 +3,7 @@ using System;
 
 namespace Mosa.External.x86.FileSystem
 {
-    class IDEDisk : IDisk
+    public class IDEDisk : IDisk
     {
         IDE IDE;
 

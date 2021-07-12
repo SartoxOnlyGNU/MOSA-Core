@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 namespace Mosa.External.x86.FileSystem
 {
-    class FAT12
+    public class FAT12
     {
         public class FileInfo
         {

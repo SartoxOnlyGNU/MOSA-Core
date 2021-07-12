@@ -1,5 +1,6 @@
 ﻿// Copyright (c) MOSA Project. Licensed under the New BSD License.
 
+using Mosa.External.x86.FileSystem;
 using Mosa.Kernel.x86;
 
 namespace $safeprojectname$
@@ -20,6 +21,12 @@ namespace $safeprojectname$
             Console.Color = ConsoleColor.White;
 
             PS2Keyboard.Initialize();
+
+            /*
+            The MOSA file system is very incomplete. You can read file only! But you can implement it for us!
+            FAT12 fAT12 = new FAT12(new IDEDisk(), 2048 + 15, 16, 1839, 128);
+            byte[] b = fAT12.ReadAllBytes("TEST1.TXT");
+            */
 
             Console.WriteLine("MOSA Booted Successfully. Type Anything You Want And Get Echo Back!");
 

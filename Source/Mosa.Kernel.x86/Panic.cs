@@ -38,10 +38,11 @@ namespace Mosa.Kernel.x86
 
 			Console.BackgroundColor = ConsoleColor.Black;
 
-			Console.Clear();
-			Console.SetCursorPosition(0, 0);
+			//Console.Clear();
+			//Console.SetCursorPosition(0, 0);
 
 			Console.Color = ConsoleColor.White;
+			Console.WriteLine();
 			Console.WriteLine("Kernel Panic!");
 			Console.WriteLine("Message:"+message);
 

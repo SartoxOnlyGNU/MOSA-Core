@@ -28,6 +28,7 @@ namespace Mosa.External.x86
 	{
 		private readonly Pointer address;
 		private readonly uint size;
+		private readonly bool IsManaged;
 
 		public Pointer Address { get { return address; } }
 
@@ -37,22 +38,21 @@ namespace Mosa.External.x86
 		{
 			this.address = address;
 			this.size = size;
+			IsManaged = false;
 		}
 
-        public MemoryBlock(uint size)
+		public MemoryBlock(uint size)
         {
 			this.address = GC.AllocateObject(size);
 			this.size = size;
+			IsManaged = true;
         }
 
-        public MemoryBlock(byte[] data)
-        {
-			this.address = GC.AllocateObject((uint)data.Length);
-			this.size = (uint)data.Length;
-
-			for(int i = 0; i < data.Length; i++) 
+		public void Free() 
+		{
+            if (this.IsManaged) 
 			{
-				Write8((uint)i, data[i]);
+				GC.Free((uint)address, size);
 			}
 		}
 

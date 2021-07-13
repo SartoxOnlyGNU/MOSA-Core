@@ -122,9 +122,11 @@ namespace Mosa.External.x86.Driver
 
         public bool Available()
         {
-            IOPort.Out8(LBALowPort, 0x88);
+            //IOPort.Out8(LBALowPort, 0x88);
+            IOPort.Out8(0x1F3, 0x88);
 
-            var found = IOPort.In8(LBALowPort) == 0x88;
+            //var found = IOPort.In8(LBALowPort) == 0x88;
+            var found = IOPort.In8(0x1F3) == 0x88;
 
             return found;
         }

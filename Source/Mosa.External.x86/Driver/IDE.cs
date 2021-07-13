@@ -88,7 +88,7 @@ namespace Mosa.External.x86.Driver
             Drive1 = 1
         }
 
-        public void Initialize()
+        public IDE()
         {
             DataPort = 0x1F0;
             ErrorPort = 0x1F1;
@@ -110,7 +110,10 @@ namespace Mosa.External.x86.Driver
                 driveInfo[drive].Present = false;
                 driveInfo[drive].MaxLBA = 0;
             }
+        }
 
+        public void Initialize()
+        {
             //Start Device
             IOPort.Out8(ControlPort, 0);
 
@@ -122,11 +125,9 @@ namespace Mosa.External.x86.Driver
 
         public bool Available()
         {
-            //IOPort.Out8(LBALowPort, 0x88);
-            IOPort.Out8(0x1F3, 0x88);
+            IOPort.Out8(LBALowPort, 0x88);
 
-            //var found = IOPort.In8(LBALowPort) == 0x88;
-            var found = IOPort.In8(0x1F3) == 0x88;
+            var found = IOPort.In8(LBALowPort) == 0x88;
 
             return found;
         }

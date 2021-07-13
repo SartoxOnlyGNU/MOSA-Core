@@ -241,6 +241,18 @@ namespace Mosa.Launcher.Console
 					TimeSpan timeSpan = DateTime.Now.Subtract(StartTime);
 					System.Console.WriteLine($"Compile End {timeSpan}");
 					break;
+				case CompilerEvent.Exception:
+					System.Console.WriteLine("Fatal! Exception Thrown:");
+					System.Console.WriteLine(message);
+					System.Console.ReadKey();
+					Environment.Exit(0);
+					break;
+				case CompilerEvent.Error:
+					System.Console.WriteLine("Fatal! Compiler Error:");
+					System.Console.WriteLine(message);
+					System.Console.ReadKey();
+					Environment.Exit(0);
+					break;
 			}
 		}
 

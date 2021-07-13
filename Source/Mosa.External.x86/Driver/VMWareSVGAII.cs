@@ -57,10 +57,10 @@ namespace Mosa.External.x86.Driver
         public uint depth;
 
 
-		/// <summary>
-		/// Before using this. Make sure you've setup PCI
-		/// </summary>
-		public VMWareSVGAII()
+	/// <summary>
+	/// Before using this. Make sure you've setup PCI
+	/// </summary>
+	public VMWareSVGAII()
         {
             device = (PCI.GetDevice(VendorID.VMWare, DeviceID.SVGAIIAdapter));
             device.EnableMemory(true);

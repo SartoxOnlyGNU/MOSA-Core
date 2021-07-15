@@ -48,6 +48,18 @@ namespace Mosa.External.x86
 			IsManaged = true;
         }
 
+        public MemoryBlock(byte[] data)
+        {
+			this.address = GC.AllocateObject((uint)data.Length);
+			this.size = (uint)data.Length;
+			this.IsManaged = true;
+			
+			for(int i = 0; i < data.Length; i++) 
+			{
+				Write8((uint)i, data[i]);
+			}
+        }
+
 		public void Free() 
 		{
             if (this.IsManaged) 

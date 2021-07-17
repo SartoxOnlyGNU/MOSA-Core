@@ -85,13 +85,10 @@ namespace Mosa.External.x86.FileSystem
             ReadFileList(fileListSector0ffset);
         }
 
-        /// <summary>
-        /// Warning: The file name must be completely uppercase.
-        /// </summary>
-        /// <param name="Name"></param>
-        /// <returns></returns>
         public byte[] ReadAllBytes(string Name)
         {
+            Name = Name.ToUpper();
+
             FileInfo fileInfo = new FileInfo();
             foreach (var v in FileInfos)
             {

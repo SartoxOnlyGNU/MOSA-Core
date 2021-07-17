@@ -48,12 +48,7 @@ namespace Mosa.External.x86.FileSystem
 
             byte[] header = new byte[IDE.SectorSize];
             disk.ReadBlock(partitionInfo.LBA, 1, header);
-            /*
-            foreach(var v in header) 
-            {
-                Console.Write(v.ToString("x2") + ",");
-            }
-            */
+
             MemoryBlock memoryBlock = new MemoryBlock(header);
 
 

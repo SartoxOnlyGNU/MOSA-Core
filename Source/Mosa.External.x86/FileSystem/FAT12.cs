@@ -12,22 +12,22 @@ namespace Mosa.External.x86.FileSystem
 {
     public class FAT12
     {
-        class FAT12Header 
+        struct FAT12Header 
         {
-            public string OEMName = "";
-            public ushort RootEntryCount = 0;
-            public byte NumberOfFATs = 0;
-            public ushort SectorsPerFATs = 0;
-            public byte SectorsPerCluster = 0;
-            public ushort ResvdSector = 0;
+            public string OEMName;
+            public ushort RootEntryCount;
+            public byte NumberOfFATs;
+            public ushort SectorsPerFATs;
+            public byte SectorsPerCluster;
+            public ushort ResvdSector;
         }
 
-        public class FileInfo
+        public struct FileInfo
         {
-            public string Name = "";
-            public char Type = (char)0;
-            public ushort cluster = 0;
-            public uint size = 0;
+            public string Name;
+            public char Type;
+            public ushort cluster;
+            public uint size;
         }
 
         public List<FileInfo> FileInfos;
@@ -53,7 +53,7 @@ namespace Mosa.External.x86.FileSystem
             MemoryBlock memoryBlock = new MemoryBlock(header);
 
 
-            fAT12Header = new FAT12Header();
+            fAT12Header = new FAT12Header() { OEMName = "" };
             for(int i = 0; i < 8; i++) 
             {
                 fAT12Header.OEMName += ASCII.GetChar(memoryBlock.Read8((uint)(0x3 + i)));
@@ -146,12 +146,19 @@ namespace Mosa.External.x86.FileSystem
                     _data[u] = data[u + T];
                 }
                 T += 32;
-                FileInfo fileInfo = GetFileInfo(_data);
 
-                if (fileInfo == null)
+                //
+                if(_data[0] == 0xE5) 
+                {
+                    continue;
+                }
+                if (_data[0] == 0x00)
                 {
                     break;
                 }
+                //
+
+                FileInfo fileInfo = GetFileInfo(_data);
 
                 if (fileInfo.size == 0 || fileInfo.size == uint.MaxValue || fileInfo.cluster == 0)
                 {
@@ -169,13 +176,7 @@ namespace Mosa.External.x86.FileSystem
 
         private static FileInfo GetFileInfo(byte[] _data)
         {
-            //0xE5 = Removed
-            if (_data[0] == 0x00 || _data[0] == 0xE5)
-            {
-                return null;
-            }
-
-            FileInfo fileInfo = new FileInfo();
+            FileInfo fileInfo = new FileInfo() { Name = ""};
             //Name
             for (int i = 0; i < 8; i++)
             {

@@ -89,46 +89,48 @@ namespace Mosa.External.x86.FileSystem
         {
             Name = Name.ToUpper();
 
-            FileInfo fileInfo = new FileInfo();
-            foreach (var v in FileInfos)
+            FileInfo fileInfo = new FileInfo() { size = 0 };
+            foreach(var v in FileInfos) 
             {
-                if (v.Name == Name)
+                if(v.Name == Name) 
                 {
                     fileInfo = v;
                 }
             }
-
-            if (fileInfo.size == 0)
+            if(fileInfo.size == 0) 
             {
-                //GC.DisposeObject(fileInfo);
-                Panic.Error("No Such File.");
-                return null;
+                Panic.Error("No such file");
             }
 
-            uint count = 1;
-            if (fileInfo.size > IDE.SectorSize)
+            uint count = 0;
+            if(fileInfo.size <= IDE.SectorSize) 
             {
-                count = (fileInfo.size / IDE.SectorSize) + 1;
+                count = 1;
             }
-            byte[] data = new byte[count * IDE.SectorSize];
-            //             //                The Sector Of This File                         //
-            Disk.ReadBlock((uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.cluster - 2) * fAT12Header.SectorsPerCluster)), count, data);
+            else 
+            {
+                if(fileInfo.size % IDE.SectorSize != 0) 
+                {
+                    count = fileInfo.size / IDE.SectorSize + 1;
+                }
+                else 
+                {
+                    count = fileInfo.size / IDE.SectorSize;
+                }
+            }
 
-            /*
-            foreach (var v in data)
-            {
-                Console.Write((v).ToString("x2"));
-            }
-            */
+            uint offset = (uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.cluster - 2) * fAT12Header.SectorsPerCluster));
+            byte[] data = new byte[IDE.SectorSize * count];
+            Disk.ReadBlock(offset, count, data);
 
             byte[] result = new byte[fileInfo.size];
-            for (int i = 0; i < fileInfo.size; i++)
+
+            for(int i = 0; i < fileInfo.size; i++) 
             {
                 result[i] = data[i];
             }
 
             GC.DisposeObject(data);
-            //GC.DisposeObject(fileInfo);
 
             return result;
         }

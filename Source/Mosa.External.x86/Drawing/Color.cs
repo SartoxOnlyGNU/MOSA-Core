@@ -14,6 +14,11 @@ namespace Mosa.External.x86.Drawing
 			return A << 24 | R << 16 | G << 8 | B;
 		}
 
+		public static int ToArgb(byte r, byte g, byte b)
+		{
+			return 255 << 24 | r << 16 | g << 8 | b;
+		}
+
 		public static Color FromArgb(byte red, byte green, byte blue)
 		{
 			return new Color() { A = 255, R = red, G = green, B = blue };
@@ -28,5 +33,10 @@ namespace Mosa.External.x86.Drawing
 		{
 			return new Color() { A = (byte)((argb >> 24) & 0xFF), R = (byte)((argb >> 16) & 0xFF), G = (byte)((argb >> 8) & 0xFF), B = (byte)((argb) & 0xFF) };
 		}
-	}
+
+        public override string ToString()
+        {
+			return "A:" + A + " " + "R:" + R + " " + "G:" + G + " " + "B:" + B;
+		}
+    }
 }

@@ -112,10 +112,12 @@ namespace Mosa.External.x86.FileSystem
             //             //                The Sector Of This File                         //
             Disk.ReadBlock((uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.cluster - 2) * fAT12Header.SectorsPerCluster)), count, data);
 
+            /*
             foreach (var v in data)
             {
                 Console.Write((v).ToString("x2"));
             }
+            */
 
             byte[] result = new byte[fileInfo.size];
             for (int i = 0; i < fileInfo.size; i++)

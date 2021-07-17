@@ -60,7 +60,7 @@ namespace Mosa.Kernel
             get { return (uint)Devices.Count; }
         }
 
-        public static void Setup()
+        internal static void Setup()
         {
             Devices = new List<PCIDevice>();
             if ((PCIDevice.GetHeaderType(0x0, 0x0, 0x0) & 0x80) == 0)

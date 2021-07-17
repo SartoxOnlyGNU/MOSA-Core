@@ -1,5 +1,6 @@
 ﻿using Mosa.External.x86;
 using Mosa.External.x86.Driver;
+using Mosa.External.x86.Encoding;
 using Mosa.External.x86.FileSystem;
 using Mosa.Kernel.x86;
 using Mosa.Runtime;
@@ -55,7 +56,7 @@ namespace Mosa.External.x86.FileSystem
             fAT12Header = new FAT12Header();
             for(int i = 0; i < 8; i++) 
             {
-                fAT12Header.OEMName += (char)memoryBlock.Read8((uint)(0x3 + i));
+                fAT12Header.OEMName += ASCII.GetChar(memoryBlock.Read8((uint)(0x3 + i)));
             }
 
             fAT12Header.SectorsPerCluster = memoryBlock.Read8(0xD);
@@ -86,7 +87,6 @@ namespace Mosa.External.x86.FileSystem
 
         public byte[] ReadAllBytes(string Name)
         {
-            Name = Name.ToUpper();
             FileInfo fileInfo = new FileInfo();
             foreach (var v in FileInfos)
             {
@@ -182,7 +182,7 @@ namespace Mosa.External.x86.FileSystem
                 {
                     break;
                 }
-                fileInfo.Name += (char)_data[i];
+                fileInfo.Name += ASCII.GetChar(_data[i]);
             }
             fileInfo.Name += ".";
             //Extension
@@ -192,10 +192,10 @@ namespace Mosa.External.x86.FileSystem
                 {
                     break;
                 }
-                fileInfo.Name += (char)_data[i];
+                fileInfo.Name += ASCII.GetChar(_data[i]);
             }
             //Type
-            fileInfo.Type = (char)_data[11];
+            fileInfo.Type = ASCII.GetChar(_data[11]);
 
             //Cluster
             ushort Cluster = (ushort)(_data[26] | _data[27] << 8);

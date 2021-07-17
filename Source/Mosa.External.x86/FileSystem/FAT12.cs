@@ -1,4 +1,6 @@
-﻿using Mosa.External.x86.Driver;
+﻿using Mosa.External.x86;
+using Mosa.External.x86.Driver;
+using Mosa.External.x86.FileSystem;
 using Mosa.Kernel.x86;
 using Mosa.Runtime;
 using Mosa.Runtime.x86;
@@ -9,13 +11,20 @@ namespace Mosa.External.x86.FileSystem
 {
     public class FAT12
     {
+        class FAT12Header 
+        {
+            public string OEMName = "";
+            public ushort RootEntryCount = 0;
+            public byte NumberOfFATs = 0;
+            public ushort SectorsPerFATs = 0;
+            public byte SectorsPerCluster = 0;
+            public ushort ResvdSector = 0;
+        }
+
         public class FileInfo
         {
             public string Name = "";
             public char Type = (char)0;
-            public char[] Reserved = new char[10];
-            public ushort time = 0;
-            public ushort date = 0;
             public ushort cluster = 0;
             public uint size = 0;
         }
@@ -24,28 +33,69 @@ namespace Mosa.External.x86.FileSystem
         IDisk Disk;
 
         uint fileListSectorLength;
-        uint fileSectorOffsetMultiply;
-        uint fileSectorOffset;
+        uint fileListSector0ffset;
+        uint fileAreaSectorOffset;
+        PartitionInfo partitionInfo;
 
-        public FAT12(IDisk disk,uint fileListSector0ffset,uint fileListSectorLength, uint fileSectorOffset, uint fileSectorOffsetMultiply)
+        FAT12Header fAT12Header;
+
+        public FAT12(IDisk disk, PartitionInfo _partitionInfo)
         {
             Disk = disk;
             FileInfos = new List<FileInfo>();
+            partitionInfo = _partitionInfo;
 
-            this.fileListSectorLength = fileListSectorLength;
-            this.fileSectorOffsetMultiply = fileSectorOffsetMultiply;
-            this.fileSectorOffset = fileSectorOffset;
+
+            byte[] header = new byte[IDE.SectorSize];
+            disk.ReadBlock(partitionInfo.LBA, 1, header);
+            /*
+            foreach(var v in header) 
+            {
+                Console.Write(v.ToString("x2") + ",");
+            }
+            */
+            MemoryBlock memoryBlock = new MemoryBlock(header);
+
+
+            fAT12Header = new FAT12Header();
+            for(int i = 0; i < 8; i++) 
+            {
+                fAT12Header.OEMName += (char)memoryBlock.Read8((uint)(0x3 + i));
+            }
+
+            fAT12Header.SectorsPerCluster = memoryBlock.Read8(0xD);
+
+            fAT12Header.RootEntryCount = (ushort)memoryBlock.Read16(0x11);
+
+            fAT12Header.NumberOfFATs = memoryBlock.Read8(0x10);
+
+            fAT12Header.SectorsPerFATs = memoryBlock.Read16(0x16);
+
+            fAT12Header.ResvdSector = (ushort)memoryBlock.Read16(0x0e);
+
+
+            this.fileListSectorLength = (uint)((fAT12Header.RootEntryCount * 32 + (IDE.SectorSize-1)) / IDE.SectorSize);
+
+            /*
+             * |    Boot   |
+             * |    FAT1   |
+             * |    FAT2   |
+             * | Directory |
+             */
+            this.fileListSector0ffset = (uint)(partitionInfo.LBA + fAT12Header.ResvdSector + fAT12Header.SectorsPerFATs * 2);
+
+            this.fileAreaSectorOffset = (fAT12Header.ResvdSector + ((uint)fAT12Header.NumberOfFATs * fAT12Header.SectorsPerFATs) + ((fAT12Header.RootEntryCount * 32u) / IDE.SectorSize));
 
             ReadFileList(fileListSector0ffset);
         }
 
-        public byte[] ReadAllBytes(string Name) 
+        public byte[] ReadAllBytes(string Name)
         {
             Name = Name.ToUpper();
             FileInfo fileInfo = new FileInfo();
-            foreach(var v in FileInfos) 
+            foreach (var v in FileInfos)
             {
-                if(v.Name == Name) 
+                if (v.Name == Name)
                 {
                     fileInfo = v;
                 }
@@ -59,16 +109,21 @@ namespace Mosa.External.x86.FileSystem
             }
 
             uint count = 1;
-            if(fileInfo.size > IDE.SectorSize) 
+            if (fileInfo.size > IDE.SectorSize)
             {
                 count = (fileInfo.size / IDE.SectorSize) + 1;
             }
             byte[] data = new byte[count * IDE.SectorSize];
             //             //                The Sector Of This File                         //
-            Disk.ReadBlock((uint)fileInfo.cluster * fileSectorOffsetMultiply + fileSectorOffset, count, data);
+            Disk.ReadBlock((uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.cluster - 2) * fAT12Header.SectorsPerCluster)), count, data);
+
+            foreach (var v in data)
+            {
+                Console.Write((v).ToString("x2"));
+            }
 
             byte[] result = new byte[fileInfo.size];
-            for(int i = 0; i < fileInfo.size; i++) 
+            for (int i = 0; i < fileInfo.size; i++)
             {
                 result[i] = data[i];
             }
@@ -87,7 +142,7 @@ namespace Mosa.External.x86.FileSystem
             uint T = 0;
             byte[] _data = new byte[32];
 
-            for (; ; ) 
+            for (; ; )
             {
                 for (uint u = 0; u < 32; u++)
                 {
@@ -96,12 +151,12 @@ namespace Mosa.External.x86.FileSystem
                 T += 32;
                 FileInfo fileInfo = GetFileInfo(_data);
 
-                if(fileInfo == null) 
+                if (fileInfo == null)
                 {
                     break;
                 }
 
-                if(fileInfo.size == 0 || fileInfo.size == uint.MaxValue || fileInfo.cluster == 0) 
+                if (fileInfo.size == 0 || fileInfo.size == uint.MaxValue || fileInfo.cluster == 0)
                 {
                     continue;
                 }
@@ -111,33 +166,22 @@ namespace Mosa.External.x86.FileSystem
                 //GC.DisposeObject(fileInfo);
             }
 
-            GC.DisposeObject(data);
-            GC.DisposeObject(_data);
-        }
-
-        private static void PrintFileInfo(FileInfo fileInfo)
-        {
-            Console.WriteLine();
-            Console.WriteLine("Name:" + fileInfo.Name);
-            Console.WriteLine("Type:" + fileInfo.Type);
-            Console.WriteLine("Time:" + fileInfo.time);
-            Console.WriteLine("Date:" + fileInfo.date);
-            Console.WriteLine("Cluster:" + fileInfo.cluster);
-            Console.WriteLine("Size:" + fileInfo.size);
+            //GC.DisposeObject(data);
+            //GC.DisposeObject(_data);
         }
 
         private static FileInfo GetFileInfo(byte[] _data)
         {
-            if(_data[0] == 0x00) 
+            if (_data[0] == 0x00)
             {
                 return null;
             }
 
             FileInfo fileInfo = new FileInfo();
             //Name
-            for(int i = 0; i < 8; i++) 
+            for (int i = 0; i < 8; i++)
             {
-                if(_data[i] == 0x20) 
+                if (_data[i] == 0x20)
                 {
                     break;
                 }
@@ -145,7 +189,7 @@ namespace Mosa.External.x86.FileSystem
             }
             fileInfo.Name += ".";
             //Extension
-            for(int i = 8; i < 11; i++) 
+            for (int i = 8; i < 11; i++)
             {
                 if (_data[i] == 0x20)
                 {
@@ -155,14 +199,7 @@ namespace Mosa.External.x86.FileSystem
             }
             //Type
             fileInfo.Type = (char)_data[11];
-            //Reserved
-            fileInfo.Reserved = new char[10];
-            //Time
-            ushort Time = (ushort)(_data[22] | _data[23] << 8);
-            fileInfo.time = Time;
-            //Data
-            ushort Date = (ushort)(_data[24] | _data[25] << 8);
-            fileInfo.date = Date;
+
             //Cluster
             ushort Cluster = (ushort)(_data[26] | _data[27] << 8);
             fileInfo.cluster = Cluster;

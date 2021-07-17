@@ -57,6 +57,17 @@
             }
         }
 
+        public virtual void DrawImage(Image image, int X, int Y)
+        {
+            for (int h = 0; h < image.Height; h++)
+            {
+                for (int w = 0; w < image.Width; w++)
+                {
+                    DrawPoint((uint)image.RawData[image.Width * h + w], X + w, Y + h);
+                }
+            }
+        }
+
         public void SetLimit(int X, int Y, int Width, int Height)
         {
             this.LimitX = X;

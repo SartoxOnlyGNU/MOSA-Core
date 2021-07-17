@@ -169,7 +169,8 @@ namespace Mosa.External.x86.FileSystem
 
         private static FileInfo GetFileInfo(byte[] _data)
         {
-            if (_data[0] == 0x00)
+            //0xE5 = Removed
+            if (_data[0] == 0x00 || _data[0] == 0xE5)
             {
                 return null;
             }

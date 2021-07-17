@@ -32,6 +32,9 @@ namespace Mosa.Kernel.x86
 			GC.Setup();
 
 			SmbiosManager.Setup();
+
+			//Setup PCI
+			PCI.Setup();
 		}
 	}
 }

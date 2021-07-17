@@ -52,9 +52,7 @@ namespace $safeprojectname$
 
             PS2Keyboard.Initialize();
             PS2Mouse.Initialize(Width, Height);
-
-            PCI.Setup();
-
+            
             Graphics graphics = new VMWareSVGAIIGraphics(Width, Height);
 
             //Generator https://github.com/nifanfa/BitFont

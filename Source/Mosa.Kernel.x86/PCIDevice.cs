@@ -32,7 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 using Mosa.Kernel.x86;
 using System;
 
-namespace Mosa.External.x86
+namespace Mosa.Kernel
 {
 	public class PCIDevice
 	{

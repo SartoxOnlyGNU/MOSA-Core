@@ -31,7 +31,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.*/
 
 using System.Collections.Generic;
 
-namespace Mosa.External.x86
+namespace Mosa.Kernel
 {
     public enum VendorID
     {

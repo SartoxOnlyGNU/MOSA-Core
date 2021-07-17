@@ -30,7 +30,7 @@ namespace Mosa.External.x86.Drawing
 
         public override void DrawPoint(uint Color, int X, int Y)
         {
-            if (X >= LimitX && X <= LimitX + LimitWidth && Y >= LimitY && Y <= LimitY + LimitHeight)
+            if (X >= LimitX && X < LimitX + LimitWidth && Y >= LimitY && Y < LimitY + LimitHeight)
             {
                 memoryBlock.Write32((uint)(((Width * Y + X) * Bpp)), Color);
             }
@@ -38,7 +38,7 @@ namespace Mosa.External.x86.Drawing
 
 		public override uint GetPoint(int X, int Y)
         {
-            if (X >= LimitX && X <= LimitX + LimitWidth && Y >= LimitY && Y <= LimitY + LimitHeight)
+            if (X >= LimitX && X < LimitX + LimitWidth && Y >= LimitY && Y < LimitY + LimitHeight)
             {
 				return memoryBlock.Read32((uint)(((Width * Y + X) * Bpp)));
 			}

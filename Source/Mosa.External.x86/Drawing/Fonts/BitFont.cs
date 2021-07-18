@@ -36,9 +36,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 			RegisteredBitFont.Add(bitFontDescriptor);
 		}
 
-		/// <summary>
-		/// Draw String With BitFont
-		/// </summary>
 		public static void DrawBitFontString(this Graphics graphics, string FontName, uint color, string Text, int X, int Y, int Devide = 0, bool DisableAntiAliasing = false)
 		{
 			BitFontDescriptor bitFontDescriptor = new BitFontDescriptor();

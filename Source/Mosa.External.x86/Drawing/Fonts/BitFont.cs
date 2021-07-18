@@ -22,9 +22,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 	{
 		public static List<BitFontDescriptor> RegisteredBitFont;
 
-		/// <summary>
-		/// The BitFont Should Be Left Aligned
-		/// </summary>
 		public static void RegisterBitFont(BitFontDescriptor bitFontDescriptor)
 		{
 			//Static Is Not Available In MOSA
@@ -59,9 +56,6 @@ namespace Mosa.External.x86.Drawing.Fonts
 			}
 		}
 
-		/// <summary>
-		/// Return Font Used Width
-		/// </summary>
 		private static int DrawBitFontChar(Graphics graphics, byte[] Raw, int Size, Color Color, int Index, int X, int Y, bool UseAntiAliasing)
 		{
 			if (Index == -1) return Size / 2;

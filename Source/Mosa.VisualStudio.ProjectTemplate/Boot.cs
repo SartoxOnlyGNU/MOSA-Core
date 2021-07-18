@@ -23,12 +23,11 @@ namespace $safeprojectname$
             PS2Keyboard.Initialize();
 
             /*
-            The MOSA file system is very incomplete.It doesn't support Directory at the moment. You can read file only! But you can implement it for us!
-            
+            //MOSA-Core Only Support FAT12 At The Moment. If You Want You Can Add More For Us!!!
             IDEDisk iDEDisk = new IDEDisk();
             MBR.Initialize(iDEDisk);
             FAT12 fAT12 = new FAT12(iDEDisk, MBR.PartitionInfos[0]);
-            byte[] b = fAT12.ReadAllBytes("TEST1.TXT");
+            byte[] b = fAT12.ReadAllBytes("/TEST1.TXT");
             */
 
             Console.WriteLine("MOSA Booted Successfully. Type Anything You Want And Get Echo Back!");

@@ -4,15 +4,14 @@ using Mosa.External.x86.Encoding;
 using Mosa.External.x86.FileSystem;
 using Mosa.Kernel.x86;
 using Mosa.Runtime;
-using Mosa.Runtime.x86;
-using System;
 using System.Collections.Generic;
 
-namespace Mosa.External.x86.FileSystem
+//namespace Mosa.External.x86.FileSystem
+namespace MOSA1
 {
     public class FAT12
     {
-        struct FAT12Header 
+        struct FAT12Header
         {
             public string OEMName;
             public ushort RootEntryCount;
@@ -25,9 +24,10 @@ namespace Mosa.External.x86.FileSystem
         public struct FileInfo
         {
             public string Name;
-            public char Type;
-            public ushort cluster;
-            public uint size;
+            public bool IsDirectory;
+            public ushort Cluster;
+            public uint Size;
+            public string ParentPath;
         }
 
         public List<FileInfo> FileInfos;
@@ -54,23 +54,23 @@ namespace Mosa.External.x86.FileSystem
 
 
             fAT12Header = new FAT12Header() { OEMName = "" };
-            for(int i = 0; i < 8; i++) 
+            for (int i = 0; i < 8; i++)
             {
                 fAT12Header.OEMName += ASCII.GetChar(memoryBlock.Read8((uint)(0x3 + i)));
             }
 
             fAT12Header.SectorsPerCluster = memoryBlock.Read8(0xD);
 
-            fAT12Header.RootEntryCount = (ushort)memoryBlock.Read16(0x11);
+            fAT12Header.RootEntryCount = memoryBlock.Read16(0x11);
 
             fAT12Header.NumberOfFATs = memoryBlock.Read8(0x10);
 
             fAT12Header.SectorsPerFATs = memoryBlock.Read16(0x16);
 
-            fAT12Header.ResvdSector = (ushort)memoryBlock.Read16(0x0e);
+            fAT12Header.ResvdSector = memoryBlock.Read16(0x0e);
 
 
-            this.fileListSectorLength = (uint)((fAT12Header.RootEntryCount * 32 + (IDE.SectorSize-1)) / IDE.SectorSize);
+            this.fileListSectorLength = (uint)((fAT12Header.RootEntryCount * 32 + (IDE.SectorSize - 1)) / IDE.SectorSize);
 
             /*
              * |    Boot   |
@@ -82,50 +82,65 @@ namespace Mosa.External.x86.FileSystem
 
             this.fileAreaSectorOffset = (fAT12Header.ResvdSector + ((uint)fAT12Header.NumberOfFATs * fAT12Header.SectorsPerFATs) + ((fAT12Header.RootEntryCount * 32u) / IDE.SectorSize));
 
-            ReadFileList(fileListSector0ffset);
+            ReadFileList(fileListSector0ffset, @"/");
         }
 
         public byte[] ReadAllBytes(string Name)
         {
             Name = Name.ToUpper();
 
-            FileInfo fileInfo = new FileInfo() { size = 0 };
-            foreach(var v in FileInfos) 
+            string Path;
+            string FileName;
+
+            if (Name.IndexOf('/') == -1)
             {
-                if(v.Name == Name) 
+                Path = "/";
+                FileName = Name;
+            }
+            else
+            {
+                Path = Name.Substring(0, Name.LastIndexOf('/') + 1);
+                FileName = Name.Substring(Path.Length);
+            }
+
+            FileInfo fileInfo = new FileInfo() { Size = 0 };
+            foreach (var v in FileInfos)
+            {
+                if (v.Name == FileName && v.ParentPath == Path)
                 {
                     fileInfo = v;
                 }
             }
-            if(fileInfo.size == 0) 
+            if (fileInfo.Size == 0)
             {
                 Panic.Error("No such file");
             }
 
             uint count = 0;
-            if(fileInfo.size <= IDE.SectorSize) 
+            if (fileInfo.Size <= IDE.SectorSize)
             {
                 count = 1;
             }
-            else 
+            else
             {
-                if(fileInfo.size % IDE.SectorSize != 0) 
+                if (fileInfo.Size % IDE.SectorSize != 0)
                 {
-                    count = fileInfo.size / IDE.SectorSize + 1;
+                    count = fileInfo.Size / IDE.SectorSize + 1;
                 }
-                else 
+                else
                 {
-                    count = fileInfo.size / IDE.SectorSize;
+                    count = fileInfo.Size / IDE.SectorSize;
                 }
             }
 
-            uint offset = (uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.cluster - 2) * fAT12Header.SectorsPerCluster));
+            uint offset = (uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.Cluster - 2) * fAT12Header.SectorsPerCluster));
+
             byte[] data = new byte[IDE.SectorSize * count];
             Disk.ReadBlock(offset, count, data);
 
-            byte[] result = new byte[fileInfo.size];
+            byte[] result = new byte[fileInfo.Size];
 
-            for(int i = 0; i < fileInfo.size; i++) 
+            for (int i = 0; i < fileInfo.Size; i++)
             {
                 result[i] = data[i];
             }
@@ -135,7 +150,7 @@ namespace Mosa.External.x86.FileSystem
             return result;
         }
 
-        public void ReadFileList(uint startSector)
+        public void ReadFileList(uint startSector, string parentPath)
         {
             byte[] data = new byte[fileListSectorLength * IDE.SectorSize];
             Disk.ReadBlock(startSector, fileListSectorLength, data);
@@ -152,7 +167,11 @@ namespace Mosa.External.x86.FileSystem
                 T += 32;
 
                 //
-                if(_data[0] == 0xE5) 
+                if (_data[0] == 0xE5)
+                {
+                    continue;
+                }
+                if (_data[0] == 0x2E)
                 {
                     continue;
                 }
@@ -162,25 +181,30 @@ namespace Mosa.External.x86.FileSystem
                 }
                 //
 
-                FileInfo fileInfo = GetFileInfo(_data);
+                FileInfo fileInfo = GetFileInfo(_data, parentPath);
 
-                if (fileInfo.size == 0 || fileInfo.size == uint.MaxValue || fileInfo.cluster == 0)
+                if (!fileInfo.IsDirectory)
                 {
-                    continue;
+                    if (fileInfo.Size == 0 || fileInfo.Size == uint.MaxValue || fileInfo.Cluster == 0)
+                    {
+                        continue;
+                    }
+                }
+                else
+                {
+                    uint offset = (uint)(partitionInfo.LBA + fileAreaSectorOffset + ((fileInfo.Cluster - 2) * fAT12Header.SectorsPerCluster));
+                    ReadFileList(offset, parentPath + fileInfo.Name + "/");
                 }
 
                 FileInfos.Add(fileInfo);
 
                 //GC.DisposeObject(fileInfo);
             }
-
-            //GC.DisposeObject(data);
-            //GC.DisposeObject(_data);
         }
 
-        private static FileInfo GetFileInfo(byte[] _data)
+        private FileInfo GetFileInfo(byte[] _data, string parentPath)
         {
-            FileInfo fileInfo = new FileInfo() { Name = ""};
+            FileInfo fileInfo = new FileInfo() { Name = "", IsDirectory = false };
             //Name
             for (int i = 0; i < 8; i++)
             {
@@ -190,7 +214,12 @@ namespace Mosa.External.x86.FileSystem
                 }
                 fileInfo.Name += ASCII.GetChar(_data[i]);
             }
-            fileInfo.Name += ".";
+
+            if (_data[8] != 0x20)
+            {
+                fileInfo.Name += ".";
+            }
+
             //Extension
             for (int i = 8; i < 11; i++)
             {
@@ -201,14 +230,25 @@ namespace Mosa.External.x86.FileSystem
                 fileInfo.Name += ASCII.GetChar(_data[i]);
             }
             //Type
-            fileInfo.Type = ASCII.GetChar(_data[11]);
+            if (_data[0xB] == 0x10)
+            {
+                fileInfo.IsDirectory = true;
+            }
 
             //Cluster
             ushort Cluster = (ushort)(_data[26] | _data[27] << 8);
-            fileInfo.cluster = Cluster;
+            fileInfo.Cluster = Cluster;
             //Size
             uint Size = (uint)(_data[28] | _data[29] << 8 | _data[30] << 16 | _data[31] << 24);
-            fileInfo.size = Size;
+            fileInfo.Size = Size;
+
+            //
+            fileInfo.ParentPath = parentPath;
+
+            Console.WriteLine("Name:" + fileInfo.Name);
+            Console.WriteLine("ParentPath:" + fileInfo.ParentPath);
+            Console.WriteLine("Type:" + (fileInfo.IsDirectory ? "Directory" : "File"));
+            Console.WriteLine();
 
             return fileInfo;
         }

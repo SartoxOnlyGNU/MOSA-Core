@@ -28,13 +28,14 @@ namespace Mosa.External.x86.Drawing
             bitmapHeader.DataSectionOffset = memoryBlock.Read32(0xA);
             bitmapHeader.Width = memoryBlock.Read32(0x12);
             bitmapHeader.Height = memoryBlock.Read32(0x16);
-            bitmapHeader.Bpp = memoryBlock.Read32(0x1C);
+            bitmapHeader.Bpp = memoryBlock.Read8(0x1C);
 
             if (bitmapHeader.Type != "BM")
             {
                 Panic.Error("This is not a bitmap");
             }
-            if (bitmapHeader.Bpp != 24)
+
+            if (bitmapHeader.Bpp != 24 && bitmapHeader.Bpp != 32)
             {
                 Panic.Error(bitmapHeader.Bpp + " bits bitmap is not supported");
             }
@@ -43,28 +44,35 @@ namespace Mosa.External.x86.Drawing
             this.Height = (int)bitmapHeader.Height;
             this.RawData = new int[Width * Height];
 
-            switch (bitmapHeader.Bpp)
+
+            int[] temp = new int[Width];
+            uint w = 0;
+            uint h = (uint)Height - 1;
+            for (uint i = 0; i < RawData.Length * (bitmapHeader.Bpp / 8); i += (bitmapHeader.Bpp / 8))
             {
-                case 24:
-                    int[] temp = new int[Width];
-                    uint w = 0;
-                    uint h = (uint)Height - 1;
-                    for (uint i = 0; i < RawData.Length * 3; i += 3)
+                if (w == Width)
+                {
+                    for (uint k = 0; k < temp.Length; k++)
                     {
-                        if (w == Width)
-                        {
-                            for (uint k = 0; k < temp.Length; k++)
-                            {
-                                RawData[Width * h + k] = temp[k];
-                            }
-                            w = 0;
-                            h--;
-                        }
-                        temp[w] = (int)memoryBlock.Read24(bitmapHeader.DataSectionOffset + i);
-                        w++;
+                        RawData[Width * h + k] = temp[k];
                     }
-                    break;
+                    w = 0;
+                    h--;
+                }
+                switch (bitmapHeader.Bpp)
+                {
+                    case 24:
+                        temp[w] = (int)(0xFF000000 | (int)memoryBlock.Read24(bitmapHeader.DataSectionOffset + i));
+                        break;
+                    case 32:
+                        temp[w] = (int)memoryBlock.Read32(bitmapHeader.DataSectionOffset + i);
+                        break;
+
+                }
+                //Console.WriteLine(Color.FromArgb(temp[w]).ToString());
+                w++;
             }
+            return;
         }
     }
 }

@@ -15,7 +15,7 @@
         public int LimitWidth;
         public int LimitHeight;
 
-        public virtual void DrawFilledRectangle(uint Color, int X, int Y, int Width, int Height) 
+        public virtual void DrawFilledRectangle(uint Color, int X, int Y, int Width, int Height)
         {
             for (int h = 0; h < Height; h++)
             {
@@ -25,7 +25,7 @@
                 }
             }
         }
-        public virtual void DrawRectangle(uint Color, int X, int Y, int Width, int Height, int Weight) 
+        public virtual void DrawRectangle(uint Color, int X, int Y, int Width, int Height, int Weight)
         {
             DrawFilledRectangle(Color, X, Y, Width, Weight);
 
@@ -38,18 +38,18 @@
         public abstract uint GetPoint(int X, int Y);
         public abstract void Update();
         public virtual void Clear(uint Color)
-		{
-			DrawFilledRectangle(Color, 0, 0, Width, Height);
-		}
+        {
+            DrawFilledRectangle(Color, 0, 0, Width, Height);
+        }
         public abstract void Disable();
 
-        public virtual void DrawImage(Image image,int X,int Y,int TransparentColor) 
+        public virtual void DrawImage(Image image, int X, int Y, int TransparentColor)
         {
-            for(int h = 0; h < image.Height; h++) 
+            for (int h = 0; h < image.Height; h++)
             {
-                for(int w = 0; w < image.Width; w++) 
+                for (int w = 0; w < image.Width; w++)
                 {
-                    if(image.RawData[image.Width * h + w] != TransparentColor)
+                    if (image.RawData[image.Width * h + w] != TransparentColor)
                     {
                         DrawPoint((uint)image.RawData[image.Width * h + w], X + w, Y + h);
                     }
@@ -63,7 +63,17 @@
             {
                 for (int w = 0; w < image.Width; w++)
                 {
-                    DrawPoint((uint)image.RawData[image.Width * h + w], X + w, Y + h);
+                    Color foreground = Color.FromArgb(image.RawData[image.Width * h + w]);
+                    Color background = Color.FromArgb((int)GetPoint(X + w, Y + h));
+
+                    int alpha = foreground.A;
+                    int inv_alpha = 255 - alpha;
+
+                    byte newR = (byte)(((foreground.R * alpha + inv_alpha * background.R) >> 8) & 0xFF);
+                    byte newG = (byte)(((foreground.G * alpha + inv_alpha * background.G) >> 8) & 0xFF);
+                    byte newB = (byte)(((foreground.B * alpha + inv_alpha * background.B) >> 8) & 0xFF);
+
+                    DrawPoint((uint)Color.ToArgb(newR, newG, newB), X + w, Y + h);
                 }
             }
         }
@@ -79,8 +89,8 @@
         {
             this.LimitX = 0;
             this.LimitY = 0;
-			this.LimitWidth = Width;
-			this.LimitHeight = Height;
+            this.LimitWidth = Width;
+            this.LimitHeight = Height;
         }
     }
 }

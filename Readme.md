@@ -2,6 +2,7 @@
 ## How to use?
 ### Just Build the Mosa.sln and Install Inno setup. then double click CreateInstaller.bat.
 ### MOSA-Core support Visual studio template!
+### Also. VMWare Player required.
 ## Inno-Setup Required [Download Here](https://jrsoftware.org/download.php/is.exe)
 
 [![Gitter Chat][gitter-image]][gitter-chat]

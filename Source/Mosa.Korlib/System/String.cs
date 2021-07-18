@@ -641,10 +641,14 @@ namespace System
 
 		public int LastIndexOf(char value)
 		{
-			if (length == 0)
-				return -1;
-
-			return LastIndexOfImpl(value, length - 1, length);
+			for (int i = Length - 1; i >= 0; i--)
+			{
+				if (this[i] == value)
+				{
+					return i;
+				}
+			}
+			return -1;
 		}
 
 		public int LastIndexOf(char value, int startIndex)

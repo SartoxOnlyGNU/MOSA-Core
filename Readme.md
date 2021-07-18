@@ -1,7 +1,8 @@
 # Note: Your project name cannot contain spaces
-# How to build?
+## How to use?
+### Just Build the Mosa.sln and Install Inno setup. then double click CreateInstaller.bat.
+### MOSA-Core support Visual studio template!
 ## Inno-Setup Required [Download Here](https://jrsoftware.org/download.php/is.exe)
-## Build the MOSA.sln and then double-click CreateInstaller.bat
 
 [![Gitter Chat][gitter-image]][gitter-chat]
 

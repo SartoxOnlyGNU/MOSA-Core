@@ -50,12 +50,15 @@ namespace Mosa.External.x86.Drawing.Fonts
 				}
 			}
 
-			int UsedX = 0;
-			for (int i = 0; i < Text.Length; i++)
+			string[] Lines = Text.Split('\n');
+			for (int l = 0; l < Lines.Length; l++)
 			{
-				char c = Text[i];
-				//                                                                                                                                                                             Anti-Alias Uses 2 pixels
-				UsedX += DrawBitFontChar(graphics, bitFontDescriptor.Raw, bitFontDescriptor.Size, Color.FromArgb((int)color), bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y, !DisableAntiAliasing) + 2 + Devide;
+				int UsedX = 0;
+				for (int i = 0; i < Lines[l].Length; i++)
+				{
+					char c = Lines[l][i];
+					UsedX += DrawBitFontChar(graphics, bitFontDescriptor.Raw, bitFontDescriptor.Size, Color.FromArgb((int)color), bitFontDescriptor.Charset.IndexOf(c), UsedX + X, Y + bitFontDescriptor.Size * l, !DisableAntiAliasing) + 2 + Devide;
+				}
 			}
 		}
 

@@ -245,11 +245,6 @@ namespace MOSA1
             //
             fileInfo.ParentPath = parentPath;
 
-            Console.WriteLine("Name:" + fileInfo.Name);
-            Console.WriteLine("ParentPath:" + fileInfo.ParentPath);
-            Console.WriteLine("Type:" + (fileInfo.IsDirectory ? "Directory" : "File"));
-            Console.WriteLine();
-
             return fileInfo;
         }
     }

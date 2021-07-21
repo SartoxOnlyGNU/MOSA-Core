@@ -107,7 +107,7 @@ namespace Mosa.Kernel
 		public readonly byte RevisionID;
 		public readonly byte ProgIF;
 		public readonly byte Subclass;
-		public readonly byte ClassCode;
+		public readonly byte ClassID;
 		public readonly byte SecondaryBusNumber;
 
 		public readonly bool DeviceExists;
@@ -138,7 +138,7 @@ namespace Mosa.Kernel
 			RevisionID = ReadRegister8((byte)Config.RevisionID);
 			ProgIF = ReadRegister8((byte)Config.ProgIF);
 			Subclass = ReadRegister8((byte)Config.SubClass);
-			ClassCode = ReadRegister8((byte)Config.Class);
+			ClassID = ReadRegister8((byte)Config.Class);
 			SecondaryBusNumber = ReadRegister8((byte)Config.SecondaryBusNo);
 
 			HeaderType = (PCIHeaderType)ReadRegister8((byte)Config.HeaderType);

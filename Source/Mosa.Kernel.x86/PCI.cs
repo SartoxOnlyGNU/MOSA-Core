@@ -106,7 +106,7 @@ namespace Mosa.Kernel
         {
             Devices.Add(xPCIDevice);
 
-            if (xPCIDevice.ClassCode == 0x6 && xPCIDevice.Subclass == 0x4)
+            if (xPCIDevice.ClassID == 0x6 && xPCIDevice.Subclass == 0x4)
                 CheckBus(xPCIDevice.SecondaryBusNumber);
         }
 

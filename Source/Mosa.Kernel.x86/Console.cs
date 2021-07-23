@@ -59,6 +59,14 @@ namespace Mosa.Kernel.x86
 			set { color &= 0x0F; color |= (byte)((value & 0x0F) << 4); }
 		}
 
+		public static void Setup() 
+		{
+			BackgroundColor = ConsoleColor.Black;
+			Clear();
+			SetCursorPosition(0, 0);
+			Color = ConsoleColor.White;
+		}
+
 		/// <summary>
 		/// Next Column
 		/// </summary>

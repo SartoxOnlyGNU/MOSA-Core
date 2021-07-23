@@ -12,6 +12,8 @@ namespace Mosa.Kernel.x86
 	{
 		public static void Setup()
 		{
+			Console.Setup();
+
 			IDT.SetInterruptHandler(null);
 
 			// Initialize GDT before IDT, because IDT Entries requires a valid Segment Selector

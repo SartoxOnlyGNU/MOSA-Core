@@ -32,21 +32,35 @@ namespace Mosa.Kernel.x86
 		{
 		}
 
+		public delegate void PanicHandler(string msg);
+
+		private static PanicHandler PH;
+
+		public static void SetPanicHandler(PanicHandler _PH)
+		{
+			PH = _PH;
+		}
+
+		private static string ErrMsg = "";
+
 		public static void Error(string message)
 		{
 			IDT.SetInterruptHandler(null);
 
 			Console.BackgroundColor = ConsoleColor.Black;
 
+			ErrMsg = "";
+
 			//Console.Clear();
 			//Console.SetCursorPosition(0, 0);
 
 			Console.Color = ConsoleColor.White;
-			Console.WriteLine();
-			Console.WriteLine("Kernel Panic!");
-			Console.WriteLine("Message:"+message);
+			WriteLine("Kernel Panic!");
+			WriteLine("Message:"+message);
 
 			DumpStackTrace();
+
+			PH?.Invoke(ErrMsg);
 
 			while (true)
 			{
@@ -69,10 +83,20 @@ namespace Mosa.Kernel.x86
 
 				if (!entry.Skip)
 				{
-					Console.WriteLine("Stake Trace:"+entry.ToString());
+					WriteLine("Stake Trace:"+entry.ToString());
 				}
 
 				depth++;
+			}
+		}
+
+		private static void WriteLine(string s) 
+		{
+			ErrMsg += s + "\n";
+
+			if(PH == null) 
+			{
+				Console.WriteLine(s);
 			}
 		}
 	}

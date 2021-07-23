@@ -5,6 +5,8 @@
 ### MOSA-Core support Visual studio template!
 ### Also. VMWare Player required.
 ## Inno-Setup Required [Download Here](https://jrsoftware.org/download.php/is.exe)
+## I'd recommend you enable IntelliSense completion for unimported types and extension methods in visual studio  
+https://docs.microsoft.com/en-us/visualstudio/ide/reference/intellisense-completion-unimported-types-extension-methods?view=vs-2019
 
 [![Gitter Chat][gitter-image]][gitter-chat]
 

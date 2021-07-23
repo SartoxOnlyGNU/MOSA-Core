@@ -45,11 +45,6 @@ namespace $safeprojectname$
 
             IDT.SetInterruptHandler(ProcessInterrupt);
 
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.Clear();
-            Console.SetCursorPosition(0, 0);
-            Console.Color = ConsoleColor.White;
-
             PS2Keyboard.Initialize();
             PS2Mouse.Initialize(Width, Height);
             
